@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- style de tailwind cli -->
+    <link href="../src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleHome.css">
+    <!-- fuentes de texto  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-(--NeonFondo)">
+    <header-component></header-component>
+    <!-- main  -->
+    <main class="overflow-x-hidden">
+        <!-- carousel noticias  -->
+         <a href="post.html">
+        <section id="bannerVideojuegos" class="bg-cover bg-center w-full h-150 md:h-200 content-end  border-b-3 border-(--NeonGrey) lg:h-[90vh] ">
+            <div class="w-full fondoBanner lg:p-6">
+            <h1 class="px-4 lg:text-6xl">Analizamos el rediseño de Donkey Kong</h1>   
+            <!-- usuario/plataforma/date  -->
+            <div class="info flex items-center gap-1 px-4 pb-2 lg:h-[10vh]" >
+                <div class="videojuego flex items-center ">
+                    <p class="lg:text-3xl hidden lg:block">Overwatch</p>
+                    <img src="img/Vector.svg" alt="iconoVideojuego" class="size-10 lg:size-20">
+                </div>
+                <!-- icono usuario  -->
+                <div class="relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden lg:size-15">
+                    <img src="img/usuario.webp" alt="usuarioIMG" class=" w-full h-full object-cover">
+                </div>
+                <div class="date lg:flex lg:gap-3">
+                    <p class="lg:hidden ">16h</p>
+                    <p class="hidden lg:block lg:text-3xl">Balatro Balatrez</p>
+                    <p class="hidden lg:block lg:text-3xl lg:font-light">Hace 16 horas</p>
+                </div>
+            </div>  
+        </div>       
+        </section>
+    </a>
+        <!-- barra busqueda  -->
+         <div class="h-15 flex align-middle my-4 mx-4 border-3 rounded-xl border-(--NeonGrey) justify-center bg-(--RellenoTarjetas) lg:my-8 lg:w-[90vw] self-center lg:m-auto" >
+            <input type="text" placeholder="Buscar en NeonNews" class="w-full text-center placeholder:text-lg placeholder:font-medium placeholder:text-[var(--NeonGrey)] text-[var(--NeonGrey)] font-medium lg:text-start lg:px-4 lg:mx-10" >
+         </div>
+
+        <!-- SECCION DESTACADOS  -->
+        <section id="destacados" class =" relative flex flex-col  w-full items-center ">
+            <h3 class=" self-start border-r-3 border-b-3 border-l-0 border-b-(--NeonGrey) border-r-(--NeonGrey) block  ps-4 pe-8 py-2 rounded-r-full sombraTarjetas bg-(--RellenoTarjetas) mb-10 lg:text-5xl lg:p-6">Más destacado</h3>  
+            <!-- bloque destacados y navegacion  -->
+            <div class="flex flex-col lg:flex-row lg:w-[90vw] gap-10 lg:my-20 justify-center">
+            <!-- Carrousel destacados  -->
+             <a href="post.html">
+            <div class=" carruselDestacados flex-col bg-(--RellenoTarjetas) sombraTarjetas p-6 w-[95vw] lg:w-auto rounded-4xl border-b-2 border-r-2 border-b-[var(--NintendoRed)] border-r-[var(--NintendoRed)] z-10 lg:flex lg:flex.col lg:justify-center lg:p-10 ">
+                <img src="img/Siksong.jpg" alt="Switch 2" class="max-w-full rounded-2xl mb-2">
+                <h4 class="lg:text-2xl lg:my-3">Jugando Balatro, pensando en Balatro</h4>
+                <!-- usuario/plataforma/date  -->
+                <div class="info flex items-center gap-1  self-start">
+                    <div class="videojuego flex items-center ">
+                        <p class="lg:text-2xl">Overwatch</p>
+                        <img src="img/Vector.svg" alt="iconoVideojuego" class="size-10 lg:size-15">
+                    </div>
+                    <!-- icono usuario  -->
+                    <div class="relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden lg:size-15">
+                        <img src="img/usuario.webp" alt="usuarioIMG" class="w-full h-full object-cover ">
+                    </div>
+                    <div class="date flex gap-3">
+                        <p class="hidden lg:block lg:text-2xl">Balatro Balatrez</p>
+                        <p class="lg:text-2xl">16h</p>
+                    </div>
+                </div>  
+            </div>
+        </a>
+        <!-- Navegacion carrouseles categorias destacadas -->
+        <div class=" flex bg-(--RellenoTarjetas) rounded-full px-3 py-3 justify-around w-[95vw] sombraTarjetas  lg:w-auto lg:flex-col ">
+            <div class="categoriaVideojuego flex justify-center"><img src="img/Switch.svg" alt="Switch" class="h-10 lg:h-20"></div>
+            <div class="categoriaVideojuego flex justify-center"><img src="img/Vector.svg" alt="Overwatch"class="h-10 lg:h-20"></div>
+            <div class="categoriaVideojuego flex justify-center"><img src="img/Capa 14.svg" alt="La compu"class="h-10 lg:h-20"></div>
+            <div class="categoriaVideojuego flex justify-center"><img src="img/Play.svg" alt="Plastation"class="h-10 lg:h-20"></div>
+            <div class="categoriaVideojuego flex justify-center"><img src="img/LoL.svg" alt="LoLxd"class="h-10 lg:h-20"></div>
+         </div>
+        </div>
+        </section>
+        <!-- SECCION PERFILES DE LA SEMANA  -->
+         <section id="perfilesSemanales" class="flex flex-col items-center w-full gap-y-15">
+            <h3 class="block text-right ml-auto border-l-4 border-b-3 border-l-(--NeonGrey) border-b-(--NeonGrey) py-2 pr-4 ps-8 rounded-l-full sombraTarjetas bg-(--RellenoTarjetas) mt-10  lg:text-5xl lg:p-6">
+                Perfiles en portada
+              </h3>
+            <!-- PERFIL 1  -->
+            <div class="flex flex-col bg-(--RellenoTarjetas) w-[90vw] self-end rounded-l-3xl p-6 sombraTarjetas lg:p-10 lg:gap-6 lg:my-20">
+            <!-- info perfil -->
+             <div class="info flex items-center self-start gap-3 ">
+                <div class="videojuego flex items-center ">
+                    <p class="lg:text-2xl">Toniki RAW</p>
+                    <img src="img/Vector.svg" alt="iconoVideojuego" class="size-10 lg:size-20">
+                </div>
+                <!-- icono usuario  -->
+                <div class="order-first relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden lg:size-20">
+                    <img src="img/channels4_profile.jpg" alt="usuarioIMG" class=" w-full h-full object-cover">
+                </div>
+             </div> 
+             <!-- posts del perfil laterales  -->
+             <div class="flex overflow-x-auto whitespace-nowrap gap-3 min-w-[90vw] quitarScrollbar scrollbarNeonNews">
+                <!-- post1 -->
+                <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                    <div class="  rounded-2xl overflow-hidden ">
+                        <img src="img/balatro-devs-tease-jimbo-plushie_feature.jpg" alt="Nitendo 2" class="max-w-full max-h-full object-cover aspect-video">
+                    </div>
+                    <p class=" whitespace-normal lg:text-2xl pt-2">Trailer de The Witcher 4 analidado al detalle</p>
+                </div>
+                <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                    <div class="  rounded-2xl overflow-hidden ">
+                        <img src="img/1600_Genji.jpg" alt="Nitendo 2" class="max-w-full max-h-full object-cover aspect-video">
+                    </div>
+                    <p class=" whitespace-normal lg:text-2xl pt-2">Trailer de The Witcher 4 analidado al detalle</p>
+                </div>
+                <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                    <div class="  rounded-2xl overflow-hidden">
+                        <img src="img/2x1_NSwitch_DonkeyKongCountryReturnsHD_image1600w (1).jpg" alt="Nitendo 2" class="max-w-full max-h-full object-cover aspect-video">
+                    </div>
+                    <p class=" whitespace-normal lg:text-2xl pt-2">Trailer de The Witcher 4 analidado al detalle</p>
+                </div>
+             </div>
+            </div> 
+            <!-- PERFIL 2    -->
+            <div class="flex flex-col bg-(--RellenoTarjetas) w-[90vw] self-end rounded-l-3xl p-6 sombraTarjetas lg:p-10 lg:gap-6 lg:mb-20">
+                <!-- info perfil -->
+                 <div class="info flex items-center self-start gap-3 ">
+                    <div class="videojuego flex items-center ">
+                        <p class="lg:text-2xl">Balatro Balatrez</p>
+                        <img src="img/Vector.svg" alt="iconoVideojuego" class="size-10 lg:size-20">
+                    </div>
+                    <!-- icono usuario  -->
+                    <div class="order-first relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden lg:size-20">
+                        <img src="img/usuario.webp" alt="usuarioIMG" class="w-full h-full object-cover">
+                    </div>
+                 </div> 
+                 <!-- posts del perfil laterales  -->
+                 <div class="flex overflow-x-auto whitespace-nowrap gap-3 min-w-[90vw] quitarScrollbar scrollbarNeonNews">
+                    <!-- post1 -->
+                    <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                        <div class="  rounded-2xl overflow-hidden">
+                            <img src="img/1LBlAihd7GU-HD.jpg" alt="Nitendo 2" class="max-w-full max-h-full object-cover aspect-video">
+                        </div>
+                        <p class=" whitespace-normal lg:text-2xl pt-2">Mid season, buffos, nerfeos, cambios y la muerte de Tracer</p>
+                    </div>
+                    <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                        <div class="  rounded-2xl overflow-hidden">
+                            <img src="img/1LBlAihd7GU-HD.jpg" alt="Nitendo 2" class="max-w-full max-h-full object-coveraspect-video">
+                        </div>
+                        <p class=" whitespace-normal lg:text-2xl pt-2">Mid season, buffos, nerfeos, cambios y la muerte de Tracer</p>
+                    </div>
+                    <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                        <div class="  rounded-2xl overflow-hidden">
+                            <img src="img/1LBlAihd7GU-HD.jpg" alt="Nitendo 2" class="max-w-full max-h-full object-cover aspect-video">
+                        </div>
+                        <p class=" whitespace-normal lg:text-2xl pt-2">Mid season, buffos, nerfeos, cambios y la muerte de Tracer</p>
+                    </div>
+                 </div>
+                </div>  
+            <!-- PERFIL 3  -->
+            <div class="flex flex-col bg-(--RellenoTarjetas) w-[90vw] self-end rounded-l-3xl p-6 sombraTarjetas lg:p-10 lg:gap-6 lg:mb-20">
+                <!-- info perfil -->
+                 <div class="info flex items-center self-start gap-3 ">
+                    <div class="videojuego flex items-center ">
+                        <p class="lg:text-2xl">Balatro Balatrez</p>
+                        <img src="img/Vector.svg" alt="iconoVideojuego" class="size-10 lg:size-20">
+                    </div>
+                    <!-- icono usuario  -->
+                    <div class="order-first relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden lg:size-20">
+                        <img src="img/usuario.webp" alt="usuarioIMG" class=" w-full h-full object-cover">
+                    </div>
+                 </div> 
+                 <!-- posts del perfil laterales  -->
+                 <div class="flex overflow-x-auto whitespace-nowrap gap-3 min-w-[90vw] quitarScrollbar scrollbarNeonNews">
+                    <!-- post1 -->
+                    <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                        <div class="  rounded-2xl overflow-hidden">
+                            <img src="img/gnad3G9QA04-HD.jpg" alt="Nitendo 2" class="max-w-full max-h-full object-cover aspect-video">
+                        </div>
+                        <p class=" whitespace-normal lg:text-2xl pt-2">Mid season, buffos, nerfeos, cambios y la muerte de Tracer</p>
+                    </div>
+                    <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                        <div class="  rounded-2xl overflow-hidden">
+                            <img src="img/gnad3G9QA04-HD.jpg" alt="Nitendo 2" class="max-w-full max-h-full object-cover aspect-video">
+                        </div>
+                        <p class=" whitespace-normal lg:text-2xl pt-2">Mid season, buffos, nerfeos, cambios y la muerte de Tracer</p>
+                    </div>
+                    <div class="flex flex-col my-3 w-[60vw] min-w-[60vw] ">
+                    <div class="  rounded-2xl overflow-hidden">
+                        <img src="img/gnad3G9QA04-HD.jpg" alt="Nitendo 2" class="max-w-full max-h-full object-cover aspect-video">
+                    </div>
+                    <p class=" whitespace-normal lg:text-2xl pt-2">Mid season, buffos, nerfeos, cambios y la muerte de Tracer</p>
+                </div>
+                 </div>
+                </div> 
+         </section>
+         <!-- SECCION TOP VIDEOS VIDEOJUEGOS  -->
+          <!-- Esta seccion contiene dos sliders que tengo que hacer con Js para obtener el efecto de escalar el div seleccionado en cada momento-->
+          <section id="topVideosVideojuegos" class="mt-10 flex flex-col  w-full items-center lg:mb-20">
+            <h3 class=" self-start border-r-3 border-b-3 border-l-0 border-b-(--NeonGrey) border-r-(--NeonGrey) block  ps-4 pe-8 py-2 rounded-r-full sombraTarjetas bg-(--RellenoTarjetas) mb-10 lg:text-5xl lg:p-6">Top Videojuegos</h3>
+            <!-- carrusel de videos de youtube  -->
+             <div class="videosCarrusel bg-(--RellenoTarjetas) w-full flex overflow-x-auto py-15 border-y-3 border-y-(--NeonGrey) sombraTarjetas gap-6 text-center ps-10 quitarScrollbar scrollbarNeonNews lg:p-25">
+                <!-- video1 -->
+                <figure class="min-w-[80vw]">
+                    <img src="img/Pokemon.jpg" alt="VideoYoutube" class="max-w-full">
+                    <figcaption class="lg:text-2xl mt-2 lg:mt-4">El juego más predatorio de Pokemon</figcaption>
+                </figure>
+                <!-- video2 -->
+                <figure class="min-w-[70vw]">
+                    <img src="img/Doom.webp" alt="VideoYoutube"class="max-w-full">
+                    <figcaption class="lg:text-2xl mt-2 lg:mt-4">Titulo del video de youtube</figcaption>
+                </figure>
+                <!-- video3 -->
+                <figure class="min-w-[60vw]">
+                    <img src="img/Siksong.jpg" alt="VideoYoutube"class="max-w-full">
+                    <figcaption class="lg:text-2xl mt-2 lg:mt-4">Titulo del video de youtube</figcaption>
+                </figure>
+                <!-- video4 -->
+                <figure class="min-w-[50vw]">
+                    <img src="img/overwatchvideo.jpg" alt="VideoYoutube"class="max-w-full">
+                    <figcaption class="lg:text-2xl mt-2 lg:mt-4">Titulo del video de youtube</figcaption>
+                </figure>
+                
+             </div>
+          </section>
+
+          <!-- SECCION TOP VIDEOS eSports  -->
+          <section id="topVideosVideojuegos" class="mt-10 flex flex-col  w-full items-center lg:mb-20">
+            <h3 class="block text-right ml-auto border-l-4 border-b-3 border-l-(--NeonGrey) border-b-(--NeonGrey) py-2 pr-4 ps-8 rounded-l-full sombraTarjetas bg-(--RellenoTarjetas) mb-10 lg:text-5xl lg:p-6 ">Top e-Sports</h3>
+            <!-- carrusel de videos de youtube  -->
+             <div class="videosCarrusel bg-(--RellenoTarjetas) w-full flex overflow-x-auto py-15 border-y-3 border-y-(--NeonGrey) sombraTarjetas gap-6 text-center ps-10 quitarScrollbar scrollbarNeonNews lg:p-25 ">
+                <!-- video1 -->
+                <figure class="min-w-[80vw]">
+                    <img src="img/Pokemon.jpg" alt="VideoYoutube" class="max-w-full">
+                    <figcaption class="lg:text-2xl mt-2 lg:mt-4">El juego más predatorio de Pokemon</figcaption>
+                </figure>
+                <!-- video2 -->
+                <figure class="min-w-[70vw]">
+                    <img src="img/Doom.webp" alt="VideoYoutube"class="max-w-full">
+                    <figcaption class="lg:text-2xl mt-2 lg:mt-4">Titulo del video de youtube</figcaption>
+                </figure>
+                <!-- video3 -->
+                <figure class="min-w-[60vw]">
+                    <img src="img/Siksong.jpg" alt="VideoYoutube"class="max-w-full">
+                    <figcaption class="lg:text-2xl mt-2 lg:mt-4">Titulo del video de youtube</figcaption>
+                </figure>
+                <!-- video4 -->
+                <figure class="min-w-[50vw]">
+                    <img src="img/overwatchvideo.jpg" alt="VideoYoutube"class="max-w-full">
+                    <figcaption class="lg:text-2xl mt-2 lg:mt-4">Titulo del video de youtube</figcaption>
+                </figure>
+                
+             </div>
+          </section>
+          <!-- SECCION NOTICIAS (DESPLAZAMIENTO INFINITO HASTA AGOTAR NOTICIAS)  -->
+          <section id="postRecientes" class="flex flex-col w-full items-center">
+            <h3 class=" self-start border-r-3 border-b-3 border-l-0 border-b-(--NeonGrey) border-r-(--NeonGrey) block  ps-4 pe-8 py-2 rounded-r-full sombraTarjetas bg-(--RellenoTarjetas) mb-10 mt-10 lg:text-5xl lg:p-6">Post recientes</h3>
+            <!-- NOTICIA 1  -->
+             <a href="post.html">
+             <div class="noticiaReciente flex flex-col w-full  px-5 border-b-3 border-b-(--PlayBlue) py-6 lg:px-[5vw] lg:flex-row lg:gap-10 items-start lg:justify-start">
+                <!-- Imagen Noticia  -->
+                <div class="aspect-video overflow-hidden rounded-lg lg:w-[30vw]">
+                <img src="img/marvels-spiderman-2.jpg" alt="Noticia Spiderman" class=" w-full h-full object-cover">
+                </div>
+                <div class="contextoPost lg:flex lg:flex-col lg:items-start lg:justify-start">
+                    <h5 class=" pt-2 lg:text-2xl">Guia de localizaciones de los trajes de Peter y Miles en Spiderman 2</h5>
+                    <!-- info post  -->
+                    <div class="info flex items-center self-start gap-2">
+                        <div class="videojuego flex items-center ">
+                            <p class="textInfo lg:text-xl">PlayStation</p>
+                            <img src="img/Play.svg" alt="iconoVideojuego" class="size-10">
+                        </div>
+                        <!-- icono usuario  -->
+                        <div class="relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden ">
+                            <img src="img/usuario.webp" alt="usuarioIMG" class=" w-full h-full object-cover">
+                        </div>
+                        <div class="date">
+                            <p class="textInfo lg:text-xl">16h</p>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </a>
+            <!-- NOTICIA 2 -->
+             <a href="post.html">
+            <div class="noticiaReciente flex flex-col w-full  px-5 border-b-3 border-b-(--PlayBlue) py-6 lg:px-[5vw] lg:flex-row lg:gap-10 lg:items-start justify-start bg-(--RellenoTarjetas)">
+                <!-- Imagen Noticia  -->
+                <div class="aspect-video overflow-hidden rounded-lg lg:w-[30vw]">
+                <img src="img/marvels-spiderman-2.jpg" alt="Noticia Spiderman" class=" w-full h-full object-cover">
+                </div>
+                <div class="contextoPost lg:flex lg:flex-col lg:items-start lg:justify-start">
+                    <h5 class=" pt-2 lg:text-2xl">Guia de localizaciones de los trajes de Peter y Miles en Spiderman 2</h5>
+                    <!-- info post  -->
+                    <div class="info flex items-center self-start gap-2">
+                        <div class="videojuego flex items-center ">
+                            <p class="textInfo lg:text-xl">PlayStation</p>
+                            <img src="img/Play.svg" alt="iconoVideojuego" class="size-10">
+                        </div>
+                        <!-- icono usuario  -->
+                        <div class="relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden ">
+                            <img src="img/usuario.webp" alt="usuarioIMG" class=" w-full h-full object-cover">
+                        </div>
+                        <div class="date">
+                            <p class="textInfo lg:text-xl">16h</p>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </a>
+            <!-- NOTICIA 3  -->
+            <a href="post.html">
+            <div class="noticiaReciente flex flex-col w-full  px-5 border-b-3 border-b-(--PlayBlue) py-6 lg:px-[5vw] lg:flex-row lg:gap-10 items-start lg:justify-start">
+                <!-- Imagen Noticia  -->
+                <div class="aspect-video overflow-hidden rounded-lg lg:w-[30vw]">
+                <img src="img/marvels-spiderman-2.jpg" alt="Noticia Spiderman" class=" w-full h-full object-cover">
+                </div>
+                <div class="contextoPost lg:flex lg:flex-col lg:items-start lg:justify-start">
+                    <h5 class=" pt-2 lg:text-2xl">Guia de localizaciones de los trajes de Peter y Miles en Spiderman 2</h5>
+                    <!-- info post  -->
+                    <div class="info flex items-center self-start gap-2">
+                        <div class="videojuego flex items-center ">
+                            <p class="textInfo lg:text-xl">PlayStation</p>
+                            <img src="img/Play.svg" alt="iconoVideojuego" class="size-10">
+                        </div>
+                        <!-- icono usuario  -->
+                        <div class="relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden ">
+                            <img src="img/usuario.webp" alt="usuarioIMG" class=" w-full h-full object-cover">
+                        </div>
+                        <div class="date">
+                            <p class="textInfo lg:text-xl">16h</p>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </a>
+            <!-- NOTICIA 4  -->
+             <a href="post.html">
+            <div class="noticiaReciente flex flex-col w-full  px-5 border-b-3 border-b-(--PlayBlue) py-6 lg:px-[5vw] lg:flex-row lg:gap-10 items-start lg:justify-start bg-(--RellenoTarjetas)">
+                <!-- Imagen Noticia  -->
+                <div class="aspect-video overflow-hidden rounded-lg lg:w-[30vw]">
+                <img src="img/marvels-spiderman-2.jpg" alt="Noticia Spiderman" class=" w-full h-full object-cover">
+                </div>
+                <div class="contextoPost lg:flex lg:flex-col lg:items-start lg:justify-start">
+                    <h5 class=" pt-2 lg:text-2xl">Guia de localizaciones de los trajes de Peter y Miles en Spiderman 2</h5>
+                    <!-- info post  -->
+                    <div class="info flex items-center self-start gap-2">
+                        <div class="videojuego flex items-center ">
+                            <p class="textInfo lg:text-xl">PlayStation</p>
+                            <img src="img/Play.svg" alt="iconoVideojuego" class="size-10">
+                        </div>
+                        <!-- icono usuario  -->
+                        <div class="relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden ">
+                            <img src="img/usuario.webp" alt="usuarioIMG" class=" w-full h-full object-cover">
+                        </div>
+                        <div class="date">
+                            <p class="textInfo lg:text-xl">16h</p>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </a>
+          </section>
+          <!-- finMain  -->
+    </main>
+    <footer-component></footer-component>
+    <script src="../pages/footer.js" type="module"></script>
+    <script src="../pages/header.js" type="module"></script>
+    <script src="../script/main.js"></script>
+</body>
+</html>
+<!-- Archivo HTML migrado a PHP. Usar videojuegos.php -->

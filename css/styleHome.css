@@ -1,0 +1,16 @@
+
+/* imagen banner  */
+main >a> #banner{
+    background-image: url(../img/genjibanner.jpg);
+}
+main >a> #bannerVideojuegos {
+    background-image: url(../img/2x1_NSwitch_DonkeyKongCountryReturnsHD_image1600w.jpg);
+}
+main >a> #bannerEsports {
+    background-image: url(../img/Movistar-KOI.jpeg);
+}
+main > #bannerPost {
+    background-image: url(../img/Ashe-Mythic-Lead-Rose-1024x364.png);
+
+}
+

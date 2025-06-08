@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+:root{
+    --NeonBlanco: #E7E9EA;
+    --NeonFondo: #181818;
+    --NeonGrey: #b3b4b3;
+    --NintendoRed: #FF182A;
+    --PlayBlue: #7381FF;
+
+    --RellenoTarjetas:  rgba(0,0,0,0.4);
+
+    /* gradientes */
+    --BordeNavegaciones: linear-gradient(90deg, rgba(231,233,234,1) 0%, rgba(231,233,234,0.5) 18%, rgba(0,0,0,0) 50%, rgba(231,233,234,0.5) 81%, rgba(231,233,234,1) 100%);
+    --GradienteBanner :linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9209370424597365) 100%);
+
+    /* Sombra  */
+    --TarjetasSombra: 46px 46px 40px 0px rgba(0, 0, 0, 0.25), 23px
+    23px 20px 0px rgba(0, 0, 0, 0.4);
+}
+/* fuente para la web  */
+@layer base{
+    html{
+        font-family: "Montserrat", sans-serif;
+    }
+    h1{
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--NeonBlanco);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    button,p{
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--NeonBlanco);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    header{
+        a{
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--NeonGrey);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    }
+    footer{
+        a{
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--NeonBlanco);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    }
+    small{
+        font-size: .6rem;
+        font-weight: 200;
+        color: var(--NeonBlanco);
+    }
+    h3{
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--NeonBlanco);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    h4{
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: var(--NeonBlanco);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);  
+    }
+    figcaption{
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--NeonBlanco);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    h5{
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--NeonBlanco);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+    }
+    .textInfo{
+        font-weight: 200;
+    }
+}
+/* clases personalizadas  */
+@layer utilities{
+
+    /* .bg-genjibanner {
+        background-image: url('home/img/genjibanner.jpg');
+    } */
+     .sombraTarjetas {
+        box-shadow: var(--TarjetasSombra);
+     }
+
+     /* //quitar scrollbar fea de navegador en los divs con overflow  */
+     .quitarScrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;    
+      }
+      .quitarScrollbar::-webkit-scrollbar {
+        display: none; 
+      }
+      .fondoBanner{
+        background: linear-gradient(0deg, rgba(0,0,0,0.9092240117130308) 0%, rgba(0,0,0,0.6310395314787701) 49%, rgba(0,0,0,0) 100%);
+      }
+    /* //mi scrollbar  */
+    /*Chromium Safari */
+  .scrollbarNeonNews::-webkit-scrollbar {
+    height: 10px; /* Altura del scrollbar horizontal */
+  }
+  /* //fondo  */
+  .scrollbarNeonNews::-webkit-scrollbar-track {
+    background: #00000000; /* Color de fondo */
+    border-radius: 0px;
+  }
+  /* barra  */
+  .scrollbarNeonNews::-webkit-scrollbar-thumb {
+    background: var(--NeonGrey); /* Color del thumb */
+    border-radius: 10px;
+    padding-bottom: 5px;
+  }
+  /* quitar flechas  */
+  .scrollbarNeonNews::-webkit-scrollbar-button{
+    display: none;
+  }
+  /*Firefox */
+  .scrollbarNeonNews {
+    scrollbar-width: thin;
+    scrollbar-color: var(--NeonGrey) #00000000;
+    scrollbar-arrow-color: transparent;
+    scroll-padding: 5px;
+  }
+}
