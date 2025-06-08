@@ -51,9 +51,7 @@ switch ($method) {
             $stmt = $pdo->query("SELECT * FROM posts");
             echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
         }
-        break;
-
-    //POST
+        break;    //POST
     case 'POST':
         $required = ['title', 'content', 'category'];
         foreach ($required as $field) {
@@ -71,7 +69,10 @@ switch ($method) {
             exit;
         }
         $id_user = $_SESSION['id_user'];
+        
         $imgName = null;
+        
+        // Manejar imagen como archivo subido
         if (!empty($_FILES['img']['name'])) {
             $ext = pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION);
             $imgName = uniqid('post_') . '.' . $ext;
@@ -82,6 +83,11 @@ switch ($method) {
                 exit;
             }
         }
+        // Manejar imagen como texto (nombre del archivo)
+        else if (!empty($input['img'])) {
+            $imgName = $input['img'];
+        }
+        
         $stmt = $pdo->prepare("INSERT INTO posts (id_user, title, img, content, category) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([
             $id_user,

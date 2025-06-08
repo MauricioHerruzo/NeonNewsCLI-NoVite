@@ -1,4 +1,27 @@
-<?php include_once('header.php') ?>
+<?php 
+include_once('header.php');
+// Requerir autenticación para poder postear
+requireLogin();
+
+// Obtener información del usuario actual
+$currentUser = getCurrentUser();
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../src/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>NeonNews</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- WYWYWYG libreria  -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+</head>
+<body class="bg-(--NeonFondo)">
     <main class="overflow-x-hidden bg-[url(/img/xA4gk3bz.png)] lg:bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.3)),url(/img/xA4gk3bz.png)] bg-[position:75%_10%] bg-cover lg:bg-center bg-fixed h-screen w-screen ">
         <div class="pt-40 md:pt-50 flex flex-col items-center justify-center backdrop-blur-sm lg:backdrop-blur-lg min-h-screen min-w-screen gap-10">
             <div class="flex flex-col w-full gap-5 p-5 max-w-[1000px] mb-40">
@@ -36,11 +59,13 @@
                     <option value="eSports">Valorant</option>
                     <option value="Nintendo">Nintendo</option>
                     <option value="PlayStation">PlayStation</option>
-                    <option value="PlayStation">Xbox</option>
-                    <option value="PlayStation">Indie</option>
+                    <option value="PlayStation">Xbox</option>                    <option value="PlayStation">PC</option>
                 </select>
-                <button id="publish" class="mt-10 bg-amber-50 text-neutral-950 py-3 px-10 rounded-full text-xl font-bold shadow-2xl hover:scale-[1.05] transition-transform duration-150">Publicar</button>
+                <button id="btn-crear-post" class="bg-neutral-900 text-white text-xl py-4 px-4 rounded-full w-56 hover:bg-white hover:text-black transition cursor-pointer self-center mt-10">Postear</button>
+
             </div>
+            <!-- Añadimos un div espaciador solo visible en pantallas grandes para forzar espacio debajo del select -->
+            <div class="hidden md:block" style="height:200px;"></div>
         </div>
     </main>
 <?php include_once('footer.php') ?>

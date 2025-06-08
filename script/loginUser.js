@@ -9,11 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
       loginError.textContent = '';
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
+      const remember = document.getElementById('loginRemember').checked;
+      
       try {
-        // Usar la API interna con ruta absoluta
-        const res = await axios.post('/NeonNewsWeb/login.php', { email, password });
+        // Usar la API interna con ruta absoluta corregida
+        const res = await axios.post('/NeonNewsDefinitivo/login.php', { 
+          email, 
+          password, 
+          remember 
+        });
         if (res.data.success) {
-          window.location.href = '/NeonNewsWeb/pages/perfil.html';
+          window.location.href = '/NeonNewsDefinitivo/pages/perfil.php';
         } else {
           loginError.textContent = res.data.error || 'Error desconocido.';
         }

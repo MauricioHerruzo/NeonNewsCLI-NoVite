@@ -1,7 +1,7 @@
 <?php include_once('header.php') ?>
     <main class="overflow-x-hidden">
         <!-- carousel noticias  -->
-        <section id="bannerPost" class="bg-cover bg-center w-full h-150 md:h-200 content-end  border-b-3 border-(--NeonGrey) lg:h-[90vh]  aspect-video mb-10"> 
+        <section id="bannerPost" class="bg-cover bg-center w-full h-150 md:h-200 content-end  border-b-3 border-(--NeonGrey) lg:h-[90vh]  aspect-video mb-10 "> 
             <div class="w-full fondoBanner lg:p-6">
             <h1 class="px-4 lg:text-6xl">Midseason patch de Overwatch 2</h1>   
             <!-- usuario/plataforma/date  -->

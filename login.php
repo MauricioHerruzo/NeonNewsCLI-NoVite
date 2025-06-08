@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $input = json_decode(file_get_contents('php://input'), true);
 $email = $input['email'] ?? '';
 $password = $input['password'] ?? '';
+$remember = $input['remember'] ?? false;
 
 if (!$email || !$password) {
     http_response_code(400);
@@ -43,7 +44,18 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($password, $user['password'])) {
     $_SESSION['id_user'] = $user['id'];
-    echo json_encode(['success' => true, 'id_user' => $user['id'], 'name' => $user['name'], 'img_profile' => $user['img_profile']]);
+    
+    // Si el usuario marcó "Recordarme", crear cookie
+    if ($remember) {
+        setcookie('remember_user', $user['id'], time() + (30 * 24 * 60 * 60), '/'); // 30 días
+    }
+    
+    echo json_encode([
+        'success' => true, 
+        'id_user' => $user['id'], 
+        'name' => $user['name'], 
+        'img_profile' => $user['img_profile']
+    ]);
 } else {
     http_response_code(401);
     echo json_encode(['error' => 'Credenciales incorrectas']);

@@ -1,24 +1,150 @@
-document.addEventListener('DOMContentLoaded', () => {
-  //Verificación de sesion (la parte del Js)
-  //
-  window.addEventListener('DOMContentLoaded', async () => {
-    try {
-      const res = await axios.get('/NeonNewsApi/users.php?action=session');
-      if (!res.data.logged) {
-        window.location.href = '/pages/login.html';
+// newPost.js - Manejo de la creación de nuevos posts
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('newPostForm');
+    const statusMessage = document.getElementById('statusMessage');
+    
+    // Si no existe el formulario nuevo, usar el botón antiguo
+    if (!form) {
+        const publishBtn = document.getElementById('publish');
+        if (publishBtn) {
+            publishBtn.addEventListener('click', handleLegacyPublish);
+        }
         return;
-      }
-    } catch (e) {
-      window.location.href = '/pages/login.html';
     }
-  });
 
-  //Quill para el wysywig
-  const quill = new Quill('#editor', {
-    theme: 'snow',
-    placeholder: 'Escribe el contenido del post...',
-    modules: {
-      toolbar: '#editor-toolbar'
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const title = document.getElementById('title').value.trim();
+        const category = document.getElementById('category').value;
+        const image = document.getElementById('image').value.trim();
+        const content = document.getElementById('content').value.trim();
+        
+        // Validación básica
+        if (!title || !category || !content) {
+            showMessage('Por favor, completa todos los campos obligatorios.', 'error');
+            return;
+        }
+        
+        // Preparar datos para enviar
+        const postData = {
+            title: title,
+            category: category,
+            img: image || 'default-post.jpg', // imagen por defecto si no se especifica
+            content: content
+        };
+        
+        try {
+            showMessage('Publicando post...', 'info');
+            
+            // Enviar datos a la API
+            const response = await fetch('/NeonNewsDefinitivo/api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(postData)
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok && result.success) {
+                showMessage('¡Post publicado exitosamente!', 'success');
+                // Redireccionar después de 2 segundos
+                setTimeout(() => {
+                    window.location.href = '/NeonNewsDefinitivo/index.php';
+                }, 2000);
+            } else {
+                showMessage('Error al publicar el post: ' + (result.message || 'Error desconocido'), 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showMessage('Error de conexión al publicar el post.', 'error');
+        }
+    });
+    
+    function showMessage(message, type) {
+        statusMessage.className = `mt-6 p-4 rounded-lg ${getMessageClasses(type)}`;
+        statusMessage.textContent = message;
+        statusMessage.classList.remove('hidden');
+        
+        // Ocultar después de 5 segundos si no es mensaje de info
+        if (type !== 'info') {
+            setTimeout(() => {
+                statusMessage.classList.add('hidden');
+            }, 5000);
+        }
+    }
+    
+    function getMessageClasses(type) {
+        switch (type) {
+            case 'success':
+                return 'bg-green-700 text-white border border-green-600';
+            case 'error':
+                return 'bg-red-700 text-white border border-red-600';
+            case 'info':
+                return 'bg-blue-700 text-white border border-blue-600';
+            default:
+                return 'bg-gray-700 text-white border border-gray-600';
+        }
+    }
+});
+
+// Función para manejar el botón de publicar del sistema anterior (Quill.js)
+async function handleLegacyPublish() {
+    // Verificar si Quill está disponible
+    if (typeof quill === 'undefined') {
+        alert('Error: Editor no inicializado');
+        return;
+    }
+    
+    const title = document.getElementById('title').value.trim();
+    const category = document.getElementById('category').value;
+    const content = quill.root.innerHTML; // Obtener HTML del editor Quill
+    const imageFile = document.getElementById('img')?.files[0];
+    
+    if (!title || !category || !content || content === '<p><br></p>') {
+        alert('Por favor, completa todos los campos obligatorios.');
+        return;
+    }
+    
+    // Si hay archivo de imagen, necesitaríamos subirlo primero
+    let imageName = 'default-post.jpg';
+    if (imageFile) {
+        // Aquí podrías implementar la subida de archivo
+        console.log('Archivo de imagen seleccionado:', imageFile.name);
+        imageName = imageFile.name;
+    }
+    
+    const postData = {
+        title: title,
+        category: category,
+        img: imageName,
+        content: content
+    };
+    
+    try {
+        const response = await fetch('/NeonNewsDefinitivo/api.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
+            alert('¡Post publicado exitosamente!');
+            window.location.href = '/NeonNewsDefinitivo/index.php';
+        } else {
+            alert('Error al publicar el post: ' + (result.message || 'Error desconocido'));
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error de conexión al publicar el post.');
+    }
+}
     }
   });
 

@@ -2,8 +2,8 @@
     <!-- main  -->
     <main class="overflow-x-hidden">
         <!-- carousel noticias  -->
-        <a href="pages/post.html">
-        <section id="banner" class="bg-[url(/img/xA4gk3bz.png)] bg-cover bg-center w-full h-150 md:h-200 content-end  border-b-3 border-(--NeonGrey) lg:h-screen "> 
+        <a href="pages/post.php">
+        <section id="banner" class="bg-[url(./img/xA4gk3bz.png)] bg-cover bg-center w-full h-150 md:h-200 content-end  border-b-3 border-(--NeonGrey) lg:h-screen "> 
 
             <div class="w-full fondoBanner lg:p-6 px-4 lg:px-20">
             <h1 class=" lg:text-6xl">Midseason patch de Overwatch 2</h1>   
