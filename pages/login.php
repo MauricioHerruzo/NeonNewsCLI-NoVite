@@ -17,10 +17,9 @@
                     <button type="submit" class=" bg-amber-50 mx-auto py-2 px-6 rounded-2xl  cursor-pointer hover:scale-[1.05] transition-transform duration-150 shadow-2xl text-xl text-neutral-950">Entrar</button>
                 </form>
                 <div id="loginError" class="text-red-400 text-center mt-2"></div>
-                <div class="h-[2px] bg-gradient-to-r from-transparent via-amber-50 to-transparent my-10"></div>
-                <h2 class="text-center text-amber-50 text-2xl">Registrarse</h2>
+                <div class="h-[2px] bg-gradient-to-r from-transparent via-amber-50 to-transparent my-10"></div>                <h2 class="text-center text-amber-50 text-2xl">Registrarse</h2>
                 <div id="registerError" class="text-red-400 text-center mt-2"></div>
-                <form id="registerForm" action="../users.php" class="flex flex-col gap-5 my-5 ">
+                <form id="registerForm" class="flex flex-col gap-5 my-5 ">
                     <input type="text" name="name" placeholder="Usuario" required class="border-2 border-amber-50/50 p-2 rounded-2xl text-amber-50 text-xl">
                     <input type="email" name="email" placeholder="Email" required class="border-2 border-amber-50/50 p-2 rounded-2xl text-amber-50 text-xl">
                     <input type="password" name="password" placeholder="Contraseña" required class="border-2 border-amber-50/50 p-2 rounded-2xl text-amber-50 text-xl">
@@ -30,10 +29,8 @@
             </div>
         </div>
     </main>
-<?php include_once('footer.php') ?>
-
-    <script src="../script/main.js"></script>
-    <script src="../script/newUser.js"></script>
-    <script src="../script/loginUser.js"></script>
+<?php include_once('footer.php') ?>    <script src="../script/main.js?v=<?php echo time(); ?>"></script>
+    <script src="../script/newUser.js?v=<?php echo time(); ?>"></script>
+    <script src="../script/loginUser.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

@@ -25,9 +25,20 @@ try {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Para POST/PUT con multipart/form-data (imágenes), usar $_POST y $_FILES, si no, json_decode
+//override
+if ($method === 'POST' && isset($_POST['_method']) && $_POST['_method'] === 'PUT') {
+    $method = 'PUT';
+}
+
+// Para POST/PUT con multipart/form-data (imágenes), usar $_POST y $_FILES, si no, json_decode, de hecho vamos a hacer posts override porque el put no acaba de funcionar
 if (strpos($_SERVER['CONTENT_TYPE'] ?? '', 'multipart/form-data') !== false) {
-    $input = $_POST;
+    if ($method === 'PUT') {
+ 
+        $input = $_POST; 
+
+    } else {
+        $input = $_POST;
+    }
 } else if (strpos($_SERVER['CONTENT_TYPE'] ?? '', 'application/json') !== false) {
     $input = json_decode(file_get_contents('php://input'), true);
 } else {
@@ -35,7 +46,7 @@ if (strpos($_SERVER['CONTENT_TYPE'] ?? '', 'multipart/form-data') !== false) {
 }
 
 switch ($method) {
-    // GET: lista o por categoría
+    //GET
     case 'GET':
         $category = $_GET['category'] ?? null;
         $id = $_GET['id'] ?? null;
@@ -51,8 +62,9 @@ switch ($method) {
             $stmt = $pdo->query("SELECT * FROM posts");
             echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
         }
-        break;    //POST
-    case 'POST':
+        break;   
+         //POST
+        case 'POST':
         $required = ['title', 'content', 'category'];
         foreach ($required as $field) {
             if (empty($input[$field])) {
@@ -72,7 +84,7 @@ switch ($method) {
         
         $imgName = null;
         
-        // Manejar imagen como archivo subido
+        //Manejar imagen 
         if (!empty($_FILES['img']['name'])) {
             $ext = pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION);
             $imgName = uniqid('post_') . '.' . $ext;
@@ -83,7 +95,7 @@ switch ($method) {
                 exit;
             }
         }
-        // Manejar imagen como texto (nombre del archivo)
+        //Manejar imagen 
         else if (!empty($input['img'])) {
             $imgName = $input['img'];
         }
@@ -97,16 +109,24 @@ switch ($method) {
             $input['category']
         ]);
         echo json_encode(['success' => true, 'id' => $pdo->lastInsertId(), 'img' => $imgName]);
-        break;
-
-    // PUT: actualizar post por id
-    case 'PUT':
+        break;   
+         //PUT: actualizar post por id
+        case 'PUT':
+        // Verificar autenticación
+        session_start();
+        if (!isset($_SESSION['id_user'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'No autenticado']);
+            exit;
+        }
+        
         $id = $_GET['id'] ?? null;
         if (!$id) {
             http_response_code(400);
             echo json_encode(['error' => 'ID no proporcionado']);
             exit;
         }
+        
         $fields = ['title', 'content', 'category'];
         $set = [];
         $params = [];
@@ -116,7 +136,8 @@ switch ($method) {
                 $params[] = $input[$field];
             }
         }
-        // Imagen nueva en PUT
+        
+        //PUT NO ME PERMITE ACTUALIZAR IMG PONGO UN POST CON OVERRRIDE
         if (!empty($_FILES['img']['name'])) {
             $ext = pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION);
             $imgName = uniqid('post_') . '.' . $ext;
@@ -129,11 +150,13 @@ switch ($method) {
             $set[] = "img = ?";
             $params[] = $imgName;
         }
+        
         if (empty($set)) {
             http_response_code(400);
             echo json_encode(['error' => 'No hay campos para actualizar']);
             exit;
         }
+        
         $params[] = $id;
         $sql = "UPDATE posts SET ".implode(", ", $set)." WHERE id = ?";
         $stmt = $pdo->prepare($sql);
@@ -141,7 +164,7 @@ switch ($method) {
         echo json_encode(['success' => true]);
         break;
 
-    // DELETE: borrar post por id
+    //DELETE:
     case 'DELETE':
         $id = $_GET['id'] ?? null;
         if (!$id) {

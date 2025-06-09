@@ -4,12 +4,11 @@ include_once('sesion.php');
 $isLoggedIn = isLoggedIn();
 $currentUser = $isLoggedIn ? getCurrentUser() : null;
 ?>
-<footer class="fixed top-0 right-0 z-999 h-[100vh] w-[60vw] lg:w-100 bg-black flex flex-col border-l-3 border-l-(--NeonGrey) text-end p-4 lg:p-6 md:p-8 transition-transform duration-300 transform translate-x-full" id="footer">
+<footer class="fixed top-0 right-0 z-999 h-[100vh] w-60 md:w-100 bg-black flex flex-col border-l-3 border-l-(--NeonGrey) text-end p-4 lg:p-6 md:p-8 transition-transform duration-300 transform translate-x-full" id="footer">
     
     <?php if ($isLoggedIn && $currentUser): ?>
         <!-- Usuario loggeado -->
-        <p class="lg:text-lg">¡Hola, <?php echo htmlspecialchars($currentUser['name']); ?>!</p>
-        <p class="lg:text-lg mt-2">Gestiona tu perfil y crea nuevo contenido en NeonNews</p>
+        <p class="lg:text-lg text-center">¡Hola, <?php echo htmlspecialchars($currentUser['name']); ?>!</p>
         
         <!-- Div de acceso al perfil -->
         <div class="my-6 flex flex-col items-center gap-4">
@@ -18,14 +17,14 @@ $currentUser = $isLoggedIn ? getCurrentUser() : null;
             <a href="/NeonNewsDefinitivo/pages/perfil.php" class="text-white hover:text-(--NeonGrey) transition">Ver Perfil</a>
         </div>
         
-        <div class="botones mt-auto">
-            <a href="/NeonNewsDefinitivo/pages/newPost.php" class="w-[40vw] lg:w-[15vw] my-3 border-2 border-green-400 text-green-400 rounded-lg py-1 hover:text-black hover:bg-green-400 hover:shadow-amber-50 flex items-center justify-center">Postear</a>
-            <a href="/NeonNewsDefinitivo/logout.php" class="w-[40vw] lg:w-[15vw] bg-red-600 text-white rounded-lg py-1 my-3 hover:bg-red-800 transition flex items-center justify-center">Cerrar Sesión</a>
+        <div class="botones mt-auto mx-auto">
+            <a href="/NeonNewsDefinitivo/pages/newPost.php" class="w-[40vw] lg:w-[15vw] my-3 border-2 border-white text-white rounded-lg py-1 hover:text-black hover:bg-white hover:shadow-amber-50 flex items-center justify-center">Postear</a>
+            <a href="/NeonNewsDefinitivo/logout.php" class="w-[40vw] lg:w-[15vw] bg-gray-400 text-white rounded-lg py-1 my-3 hover:bg-white hover:text-black transition flex items-center justify-center">Cerrar Sesión</a>
         </div>
     <?php else: ?>
         <!-- Usuario no loggeado -->
-        <p class="lg:text-lg">Crea un perfil para postear, crear listas personalizadas y comentar en NeonNews </p>
-        <div class="botones mt-auto">
+        <p class="lg:text-lg">Crea un perfil para postear en NeonNews </p>
+        <div class="botones mt-auto mx-auto flex flex-col items-center gap-4">
             <button class="w-[40vw] lg:w-[15vw] my-6 border-2 border-(--NeonGrey) rounded-lg py-1 hover:text-black hover:bg-(--NeonGrey) hover:shadow-amber-50" id="footer-register" type="button">Registrarse</button>
             <button class="w-[40vw] lg:w-[15vw] bg-(--NeonGrey) sombraTarjetas rounded-lg py-1 text-black hover:bg-(--NeonBlanco) hover:shadow-amber-50" id="footer-login" type="button">Iniciar Sesion</button>
         </div>

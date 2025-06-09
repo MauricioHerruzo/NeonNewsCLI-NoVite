@@ -1,4 +1,3 @@
-// Asegura que el código se ejecute cuando el DOM esté listo y el footer esté presente
 window.addEventListener('DOMContentLoaded', () => {
   const footer = document.getElementById('footer');
   if (!footer) return;

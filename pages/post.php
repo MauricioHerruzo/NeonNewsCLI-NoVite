@@ -23,15 +23,15 @@
         </div>       
         </section>
         <!-- barra busqueda  -->
-         <div class="min-h-15 flex align-middle my-5 xl:my-15 mx-4 border-3 rounded-xl border-(--NeonGrey) justify-center bg-(--RellenoTarjetas)  lg:w-[90vw] self-center lg:m-auto xl:max-w-400" >
+         <!-- <div class="min-h-15 flex align-middle my-5 xl:my-15 mx-4 border-3 rounded-xl border-(--NeonGrey) justify-center bg-(--RellenoTarjetas)  lg:w-[90vw] self-center lg:m-auto xl:max-w-400" >
             <input type="text" placeholder="Buscar en NeonNews" class="w-full text-center placeholder:text-lg placeholder:font-medium placeholder:text-[var(--NeonGrey)] text-[var(--NeonGrey)] font-medium lg:text-start lg:px-4 lg:mx-10" >
-         </div>
+         </div> -->
         <!-- SECCION DESTACADOS  -->
         <section id="destacados" class =" relative flex flex-col  w-full items-center ">
             <!-- bloque destacados y navegacion  -->
             <div class=" flex flex-col lg:flex-row lg:w-[90vw] gap-10 lg:my-10 justify-center">
             <!-- post noticia  -->
-            <div class=" carruselDestacados flex-col bg-(--RellenoTarjetas) sombraTarjetas p-6 w-[95vw] lg:w-auto rounded-4xl border-b-2 border-r-2 border-b-[var(--NintendoRed)] border-r-[var(--NintendoRed)] z-10 lg:flex lg:flex.col lg:justify-center lg:p-10 xl:max-w-400">
+            <div class=" carruselDestacados flex-col bg-(--RellenoTarjetas) sombraTarjetas p-6 max-w-[95vw] lg:w-auto rounded-4xl border-b-2 border-r-2 border-b-[var(--NintendoRed)] border-r-[var(--NintendoRed)] z-10 lg:flex lg:flex.col lg:justify-center lg:p-10 xl:max-w-[1000px]">
                 <div class="min-w-full min-h-1 aspect-video rounded-2xl" id="postImg" ></div>
                 <!-- <img src="/NeonNewsDefinitivo/img/Ashe-Mythic-Lead-Rose-1024x364.png" alt="Switch 2" class="min-w-full  aspect-video object-cover rounded-2xl mb-2"> -->
                 <div class="postBody flex flex-col  gap-y-8 mt-3" >

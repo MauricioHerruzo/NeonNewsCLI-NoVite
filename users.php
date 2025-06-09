@@ -101,8 +101,7 @@ switch ($method) {
             }
         } else if (!empty($input['img_bg'])) {
             $img_bg = $input['img_bg'];
-        }
-        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, img_profile, bio, img_bg) VALUES (?, ?, ?, ?, ?, ?)");
+        }        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, img_profile, bio, img_bg) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $input['name'],
             $input['email'],
@@ -111,7 +110,13 @@ switch ($method) {
             $bio,
             $img_bg
         ]);
-        echo json_encode(['success' => true, 'id' => $pdo->lastInsertId(), 'img_profile' => $img_profile, 'img_bg' => $img_bg]);
+        
+        //Iniciar sesión automáticamente después del registro
+        $userId = $pdo->lastInsertId();
+        session_start();
+        $_SESSION['id_user'] = $userId;
+        
+        echo json_encode(['success' => true, 'id' => $userId, 'img_profile' => $img_profile, 'img_bg' => $img_bg]);
         break;
 
     //PUT
@@ -132,6 +137,7 @@ switch ($method) {
             }
         }
         //Imagen de perfil nueva
+        //ESTO HAZLO SOLO SI DA TIEMPO
         if (!empty($_FILES['img_profile']['name'])) {
             $ext = pathinfo($_FILES['img_profile']['name'], PATHINFO_EXTENSION);
             $img_profile = uniqid('user_') . '.' . $ext;

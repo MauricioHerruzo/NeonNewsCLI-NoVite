@@ -1,14 +1,17 @@
-// newPost.js - Manejo de la creación de nuevos posts
+let quill;
+
 document.addEventListener('DOMContentLoaded', function() {
+    initializeQuillEditor();
+    
     const form = document.getElementById('newPostForm');
     const statusMessage = document.getElementById('statusMessage');
     
-    // Si no existe el formulario nuevo, usar el botón antiguo
     if (!form) {
         const publishBtn = document.getElementById('publish');
         if (publishBtn) {
             publishBtn.addEventListener('click', handleLegacyPublish);
         }
+        setupCreatePostButton();
         return;
     }
 
@@ -20,24 +23,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const image = document.getElementById('image').value.trim();
         const content = document.getElementById('content').value.trim();
         
-        // Validación básica
         if (!title || !category || !content) {
             showMessage('Por favor, completa todos los campos obligatorios.', 'error');
             return;
         }
         
-        // Preparar datos para enviar
         const postData = {
             title: title,
             category: category,
-            img: image || 'default-post.jpg', // imagen por defecto si no se especifica
+            img: image || 'default-post.jpg',
             content: content
         };
         
         try {
             showMessage('Publicando post...', 'info');
             
-            // Enviar datos a la API
             const response = await fetch('/NeonNewsDefinitivo/api.php', {
                 method: 'POST',
                 headers: {
@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (response.ok && result.success) {
                 showMessage('¡Post publicado exitosamente!', 'success');
-                // Redireccionar después de 2 segundos
                 setTimeout(() => {
                     window.location.href = '/NeonNewsDefinitivo/index.php';
                 }, 2000);
@@ -68,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         statusMessage.textContent = message;
         statusMessage.classList.remove('hidden');
         
-        // Ocultar después de 5 segundos si no es mensaje de info
         if (type !== 'info') {
             setTimeout(() => {
                 statusMessage.classList.add('hidden');
@@ -90,17 +88,114 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Función para manejar el botón de publicar del sistema anterior (Quill.js)
+function initializeQuillEditor() {
+    
+    const editorContainer = document.getElementById('editor');
+    const toolbarContainer = document.getElementById('editor-toolbar');
+    
+    if (!editorContainer) {
+        console.error("❌ Editor container #editor not found!");
+        return;
+    }
+    
+    if (!toolbarContainer) {
+        console.error("❌ Toolbar container #editor-toolbar not found!");
+        return;
+    }
+
+    try {
+        quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: '#editor-toolbar'
+            },
+            placeholder: 'Escribe el contenido de tu post aquí...',
+            formats: ['header', 'bold', 'italic', 'underline', 'strike', 'list', 'bullet', 'link']
+        });
+
+        
+        setTimeout(() => {
+            const qlEditor = document.querySelector('.ql-editor');
+            if (qlEditor) {
+                qlEditor.style.color = '#ffffff';
+                qlEditor.style.backgroundColor = '#171717';
+                qlEditor.style.minHeight = '200px';
+            }
+        }, 100);
+        
+    } catch (error) {
+        console.error("❌ Error initializing Quill:", error);
+    }
+}
+
+function setupCreatePostButton() {
+    const btn = document.getElementById('btn-crear-post');
+    if (!btn) {
+        return;
+    }
+    
+    btn.addEventListener('click', async () => {
+        await handleCreatePost();
+    });
+}
+
+async function handleCreatePost() {
+    if (typeof quill === 'undefined' || !quill) {
+        alert('Error: Editor no inicializado');
+        return;
+    }
+    
+    const title = document.getElementById('title').value.trim();
+    const imgInput = document.getElementById('img');
+    const imgFile = imgInput?.files[0];
+    const content = quill.root.innerHTML.trim();
+    const category = document.getElementById('category').value;
+    
+    if (!title || !content || !category) {
+        alert('Por favor, rellena todos los campos obligatorios (título, contenido y categoría).');
+        return;
+    }
+    
+    if (content === '<p><br></p>' || content === '') {
+        alert('Por favor, escribe el contenido del post.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('title', title);
+    if (imgFile) {
+        formData.append('img', imgFile);
+    }
+    formData.append('content', content);
+    formData.append('category', category);
+
+    try {
+        
+        const response = await axios.post('/NeonNewsDefinitivo/api.php', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        
+        if (response.data.success) {
+            alert('¡Post creado correctamente!');
+            window.location.href = '/NeonNewsDefinitivo/index.php';
+        } else {
+            alert('Error al crear el post: ' + (response.data.error || 'Error desconocido.'));
+        }
+    } catch (err) {
+        alert('Error al conectar con la API.');
+        console.error("❌ API Error:", err);
+    }
+}
+
 async function handleLegacyPublish() {
-    // Verificar si Quill está disponible
-    if (typeof quill === 'undefined') {
+    if (typeof quill === 'undefined' || !quill) {
         alert('Error: Editor no inicializado');
         return;
     }
     
     const title = document.getElementById('title').value.trim();
     const category = document.getElementById('category').value;
-    const content = quill.root.innerHTML; // Obtener HTML del editor Quill
+    const content = quill.root.innerHTML;
     const imageFile = document.getElementById('img')?.files[0];
     
     if (!title || !category || !content || content === '<p><br></p>') {
@@ -108,11 +203,8 @@ async function handleLegacyPublish() {
         return;
     }
     
-    // Si hay archivo de imagen, necesitaríamos subirlo primero
     let imageName = 'default-post.jpg';
     if (imageFile) {
-        // Aquí podrías implementar la subida de archivo
-        console.log('Archivo de imagen seleccionado:', imageFile.name);
         imageName = imageFile.name;
     }
     
@@ -145,43 +237,3 @@ async function handleLegacyPublish() {
         alert('Error de conexión al publicar el post.');
     }
 }
-    }
-  });
-
-  const btn = document.getElementById('btn-crear-post');
-  btn.addEventListener('click', async () => {
-    const title = document.getElementById('title').value.trim();
-    const imgInput = document.getElementById('img');
-    const imgFile = imgInput.files[0];
-    const content = quill.root.innerHTML.trim();
-    const category = document.getElementById('category').value;
-    //La idea la crea la base de datos
-    //Validación
-    if (!title || !imgFile || !content || !category) {
-      alert('Por favor, rellena todos los campos y selecciona una imagen.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('img', imgFile);
-    formData.append('content', content);
-    formData.append('category', category);
-
-
-    try {
-      const response = await axios.post('/NeonNewsApi/api.php', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      if (response.data.success) {
-        alert('¡Post creado correctamente!');
-        window.location.href = '/pages/post.html?id=' + response.data.id;
-      } else {
-        alert('Error al crear el post: ' + (response.data.error || 'Error desconocido.'));
-      }
-    } catch (err) {
-      alert('Error al conectar con la API.');
-      console.error(err);
-    }
-  });
-});

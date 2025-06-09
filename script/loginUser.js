@@ -1,5 +1,3 @@
-// loginUser.js - Manejo del login de usuario por JS y API interna
-
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
   const loginError = document.getElementById('loginError');
@@ -12,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const remember = document.getElementById('loginRemember').checked;
       
       try {
-        // Usar la API interna con ruta absoluta corregida
         const res = await axios.post('/NeonNewsDefinitivo/login.php', { 
           email, 
           password, 

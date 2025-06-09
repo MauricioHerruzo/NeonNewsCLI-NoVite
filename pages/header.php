@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="/NeonNewsDefinitivo/src/output.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>NeonNews</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">    <title>NeonNews</title>    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/NeonNewsDefinitivo/pages/header.js"></script>
 </head>
 <body class="bg-(--NeonFondo)">
@@ -57,10 +55,10 @@
         <div class="flex flex-col items-center justify-center basis-2/8 p-4">
             <img src="/NeonNewsDefinitivo/img/LogoNeonNews.png" alt="" class="max-w-full max-h-full object-contain" >
         </div>        <!-- ui usuario  -->
-        <div class="flex justify-end me-10 gap-3 basis-3/8 items-center" >
+        <div class="flex justify-end me-10 gap-3 basis-3/8 items-center" id="userUI">
             <?php if ($isLoggedIn && $currentUser): ?>
-                <!-- Usuario loggeado - mostrar botones de postear y logout, y perfil -->                <span class="text-lg text-(--NeonGrey)">Hola, <?php echo htmlspecialchars($currentUser['name']); ?></span>
-                <a href="/NeonNewsDefinitivo/pages/newPost.php" class="w-[40vw] xl:w-[10vw] border-2 border-green-400 text-green-400 rounded-xl xl:py-3 hover:text-black hover:bg-green-400 hover:shadow-amber-50 text-lg flex items-center justify-center">Postear</a>
+                <!-- Usuario loggeado - -->
+                <a href="/NeonNewsDefinitivo/pages/newPost.php" class="w-[40vw] xl:w-[10vw] border-2 border-white text-white rounded-xl xl:py-3 hover:text-black hover:bg-white hover:shadow-amber-50 text-lg flex items-center justify-center">Postear</a>
                 <a href="/NeonNewsDefinitivo/logout.php" class="w-[40vw] xl:w-[10vw] border-2 border-(--NeonGrey) rounded-xl xl:py-3 hover:text-black hover:bg-(--NeonGrey) hover:shadow-amber-50 text-lg flex items-center justify-center">Cerrar Sesión</a>
                 <div class="w-20 h-20 p-1 bg-cover bg-center rounded-full cursor-pointer ms-8 border-2 border-(--NeonGrey)" 
                    style="background-image: url('/NeonNewsDefinitivo/img/<?php echo htmlspecialchars($currentUser['img_profile']); ?>')" id="profilePC"></div>
