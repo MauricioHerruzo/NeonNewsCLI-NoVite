@@ -73,8 +73,8 @@ async function loadPerfilesUsers() {
                 });
                 console.log('Usuarios para perfiles cargados desde ruta alternativa:', Object.keys(perfilesUsers).length, 'usuarios');
             }
-        } catch (alternativeError) {
-            console.error('Error también en ruta alternativa para usuarios:', alternativeError);
+        } catch (error) {
+
         }
     }
 }
@@ -154,48 +154,48 @@ function updatePerfil(perfilNumber, user, posts) {
 }
 
 async function loadPerfilesSemanales() {
-    try {        console.log('📥 Cargando datos para perfiles semanales...');
+    try {       
+         console.log('Cargando datos para perfiles semanales...');
         
         await loadPerfilesUsers();
         await loadPerfilesPosts();
         
-        console.log('📊 Datos cargados:', {
+        console.log('Datos cargados:', {
             usuarios: Object.keys(perfilesUsers).length,            posts: perfilesPosts.length
         });
         
         if (Object.keys(perfilesUsers).length === 0 || perfilesPosts.length === 0) {
-            console.warn('⚠️ No hay suficientes datos para cargar perfiles semanales');
             return;
         }
         
         const randomUsers = getRandomUsers(3);
-        console.log('🎲 Usuarios aleatorios seleccionados:', randomUsers.map(u => u.name));
+        console.log('Usuarios aleatorios seleccionados:', randomUsers.map(u => u.name));
         
         for (let i = 0; i < randomUsers.length && i < 3; i++) {
             const user = randomUsers[i];
             const userPosts = getPostsByUser(user.id, 3);
-              console.log(`🔄 Actualizando perfil ${i + 1} con usuario:`, user.name, 'y', userPosts.length, 'posts');
+              console.log(`Actualizando perfil ${i + 1} con usuario:`, user.name, 'y', userPosts.length, 'posts');
             
             const postsToShow = userPosts.length > 0 ? userPosts : perfilesPosts.slice(0, 3);
             
             updatePerfil(i + 1, user, postsToShow);
         }
         
-        console.log('✅ Perfiles semanales cargados exitosamente');
+       
         
     } catch (error) {
-        console.error('❌ Error cargando perfiles semanales:', error);
+
     }
 }
 
 function navigateToPost(postId) {
     if (postId) {
-        window.location.href = `post.php?id=${postId}`;
+        window.location.href = `pages/post.php?id=${postId}`;
     }
 }
 
 document.addEventListener('DOMContentLoaded', function() {    console.log('🚀 Perfiles Semanales: DOM cargado, iniciando...');
-    console.log('🔍 Verificando elementos en el DOM...');
+    console.log('Verificando elementos en el DOM...');
     
     for (let i = 1; i <= 3; i++) {
         const perfilImg = document.querySelector(`#perfil${i}img`);
