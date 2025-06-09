@@ -1,4 +1,7 @@
 <?php 
+
+//ESTA ES LA API DE POSTS, USERS.PHP ES LA API DE USERS
+
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
@@ -12,6 +15,7 @@ $contraseña = '';
 
 $imgDir = __DIR__ . '/img/posts/';
 if (!is_dir($imgDir)) {
+    //777 permisos para la carpeta
     mkdir($imgDir, 0777, true);
 }
 
@@ -176,7 +180,7 @@ switch ($method) {
         $stmt->execute([$id]);
         echo json_encode(['success' => true]);
         break;
-
+        //Me cubro
     default:
         http_response_code(405);
         echo json_encode(['error' => 'Método no permitido']);

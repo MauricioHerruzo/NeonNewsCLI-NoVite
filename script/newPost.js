@@ -1,3 +1,4 @@
+//EL wysywig
 let quill;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -93,16 +94,11 @@ function initializeQuillEditor() {
     const editorContainer = document.getElementById('editor');
     const toolbarContainer = document.getElementById('editor-toolbar');
     
-    if (!editorContainer) {
-        console.error("❌ Editor container #editor not found!");
-        return;
-    }
-    
-    if (!toolbarContainer) {
-        console.error("❌ Toolbar container #editor-toolbar not found!");
+    if (!editorContainer && !toolbarContainer) {
         return;
     }
 
+    //HACER EL QUILL
     try {
         quill = new Quill('#editor', {
             theme: 'snow',
@@ -124,12 +120,13 @@ function initializeQuillEditor() {
         }, 100);
         
     } catch (error) {
-        console.error("❌ Error initializing Quill:", error);
+        console.error(error);
     }
 }
 
 function setupCreatePostButton() {
     const btn = document.getElementById('btn-crear-post');
+    //NO se como de buena práctica es esto pero va increible para quitarse de errores
     if (!btn) {
         return;
     }
@@ -141,7 +138,6 @@ function setupCreatePostButton() {
 
 async function handleCreatePost() {
     if (typeof quill === 'undefined' || !quill) {
-        alert('Error: Editor no inicializado');
         return;
     }
     
@@ -152,14 +148,9 @@ async function handleCreatePost() {
     const category = document.getElementById('category').value;
     
     if (!title || !content || !category) {
-        alert('Por favor, rellena todos los campos obligatorios (título, contenido y categoría).');
+        alert('Por favor, rellena todos los campos');
         return;
-    }
-    
-    if (content === '<p><br></p>' || content === '') {
-        alert('Por favor, escribe el contenido del post.');
-        return;
-    }
+    }    
 
     const formData = new FormData();
     formData.append('title', title);
@@ -177,19 +168,19 @@ async function handleCreatePost() {
         
         if (response.data.success) {
             alert('¡Post creado correctamente!');
+            //Mover fuera del post
             window.location.href = '/NeonNewsDefinitivo/index.php';
         } else {
-            alert('Error al crear el post: ' + (response.data.error || 'Error desconocido.'));
+            alert(response.data.error);
         }
     } catch (err) {
-        alert('Error al conectar con la API.');
-        console.error("❌ API Error:", err);
+        console.error(err);
     }
 }
 
+//COñazo el wywisyg he sacado esta funcion de por ahí que lo maneja porque es horroso
 async function handleLegacyPublish() {
     if (typeof quill === 'undefined' || !quill) {
-        alert('Error: Editor no inicializado');
         return;
     }
     
@@ -233,7 +224,7 @@ async function handleLegacyPublish() {
             alert('Error al publicar el post: ' + (result.message || 'Error desconocido'));
         }
     } catch (error) {
-        console.error('Error:', error);
-        alert('Error de conexión al publicar el post.');
+        console.error( error);
+
     }
 }

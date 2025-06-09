@@ -8,8 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     postId = urlParams.get('id');
     
     if (!postId) {
-        console.error('❌ No se encontró ID del post en la URL');
-        showError('Error: No se especificó qué post actualizar.');
         return;    }
     
     
@@ -24,12 +22,10 @@ function initializeQuillEditor() {
     const toolbarContainer = document.getElementById('editor-toolbar');
     
     if (!editorContainer) {
-        console.error("❌ Contenedor del editor #editor no encontrado!");
         return;
     }
     
     if (!toolbarContainer) {
-        console.error("❌ Contenedor de toolbar #editor-toolbar no encontrado!");
         return;
     }    try {
         quill = new Quill('#editor', {
@@ -52,7 +48,6 @@ function initializeQuillEditor() {
         }, 100);
         
     } catch (error) {
-        console.error("❌ Error inicializando Quill:", error);
     }
 }
 
@@ -81,12 +76,11 @@ async function loadPostData() {
             currentPostData = response.data;
             populateForm();
         } else {
-            console.error('❌ Error al cargar post:', response.data);
-            showError('Error al cargar los datos del post.');
+            console.error(response.data);
         }
     } catch (error) {
-        console.error('❌ Error de conexión al cargar post:', error);
-        showError('Error de conexión al cargar los datos del post.');
+        console.error(error);
+        //cubrirme
     } finally {
         showLoading(false);
     }
@@ -95,7 +89,6 @@ async function loadPostData() {
 function populateForm() {
     
     if (!currentPostData) {
-        console.error('❌ No hay datos del post para llenar el formulario');
         return;
     }
     
@@ -186,14 +179,7 @@ async function handleUpdatePost() {
             console.error('❌ Error de la API:', errorMsg);
             alert('Error al actualizar el post: ' + errorMsg);
         }    } catch (error) {
-        console.error("❌ Error de conexión:", error);
-        let errorMessage = 'Error de conexión al actualizar el post.';
-        
-        if (error.response) {
-            errorMessage = error.response.data?.error || error.response.data?.message || errorMessage;
-        }
-        
-        alert(errorMessage);
+        console.error(error);
     } finally {
         showLoading(false);
     }
@@ -225,7 +211,7 @@ function showLoading(show) {
 }
 
 function showError(message) {
-    console.error('❌ Error:', message);
+    console.error( message);
     
     const errorContainer = document.getElementById('errorContainer');
     const errorMessage = document.getElementById('errorMessage');

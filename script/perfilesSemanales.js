@@ -59,11 +59,9 @@ async function loadPerfilesUsers() {
             response.data.forEach(user => {
                 perfilesUsers[user.id] = user;
             });
-            console.log('Usuarios para perfiles cargados:', Object.keys(perfilesUsers).length, 'usuarios');        } else {
-            console.warn('La respuesta no contiene un array de usuarios:', response.data);
         }
     } catch (error) {
-        console.error('Error cargando usuarios para perfiles:', error);
+        console.error(error);
         try {
             const alternativeResponse = await axios.get('./users.php');
             if (alternativeResponse.data && Array.isArray(alternativeResponse.data)) {
@@ -71,7 +69,6 @@ async function loadPerfilesUsers() {
                 alternativeResponse.data.forEach(user => {
                     perfilesUsers[user.id] = user;
                 });
-                console.log('Usuarios para perfiles cargados desde ruta alternativa:', Object.keys(perfilesUsers).length, 'usuarios');
             }
         } catch (error) {
 
@@ -81,17 +78,17 @@ async function loadPerfilesUsers() {
 
 async function loadPerfilesPosts() {
     try {
-        console.log('Cargando posts para perfiles semanales...');
+
         const response = await axios.get('/NeonNewsDefinitivo/api.php');
         
         if (response.data && Array.isArray(response.data)) {
             perfilesPosts = response.data;
-            console.log('Posts para perfiles cargados:', perfilesPosts.length, 'posts');
+
         } else {
-            console.warn('La respuesta no contiene un array de posts:', response.data);
+            console.log(response.data);
         }
     } catch (error) {
-        console.error('Error cargando posts para perfiles:', error);
+        console.error(error);
     }
 }
 
@@ -109,6 +106,7 @@ function getRandomUsers(count = 3) {    const userIds = Object.keys(perfilesUser
     return selectedUsers;
 }
 
+//definitivamente habria que hacer un functions
 function getPostsByUser(userId, count = 3) {    const userPosts = perfilesPosts.filter(post => post.id_user == userId);
     
     const shuffled = userPosts.sort(() => 0.5 - Math.random());
@@ -155,7 +153,6 @@ function updatePerfil(perfilNumber, user, posts) {
 
 async function loadPerfilesSemanales() {
     try {       
-         console.log('Cargando datos para perfiles semanales...');
         
         await loadPerfilesUsers();
         await loadPerfilesPosts();
@@ -169,12 +166,12 @@ async function loadPerfilesSemanales() {
         }
         
         const randomUsers = getRandomUsers(3);
-        console.log('Usuarios aleatorios seleccionados:', randomUsers.map(u => u.name));
+
         
         for (let i = 0; i < randomUsers.length && i < 3; i++) {
             const user = randomUsers[i];
             const userPosts = getPostsByUser(user.id, 3);
-              console.log(`Actualizando perfil ${i + 1} con usuario:`, user.name, 'y', userPosts.length, 'posts');
+
             
             const postsToShow = userPosts.length > 0 ? userPosts : perfilesPosts.slice(0, 3);
             

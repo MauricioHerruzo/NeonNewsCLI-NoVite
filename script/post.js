@@ -75,8 +75,6 @@ async function loadPost() {
         const postId = getUrlParameter('id');
         
         if (!postId) {
-            console.error('❌ No se proporcionó ID del post');
-            showError('No se especificó el post a mostrar.');
             return;
         }
         
@@ -85,24 +83,19 @@ async function loadPost() {
         const post = posts.find(p => p.id == postId);
         
         if (!post) {
-            console.error('❌ Post no encontrado');
-            showError('El post solicitado no existe.');
             return;
         }        
         const userResponse = await axios.get(`/NeonNewsDefinitivo/users.php?id=${post.id_user}`);
         const user = userResponse.data;
         
         if (!user) {
-            console.error('❌ Usuario no encontrado');
-            showError('Error cargando datos del usuario.');    
                     return;
         }
         
         renderPost(post, user);
         
     } catch (error) {
-        console.error('❌ Error cargando post:', error);
-        showError('Error cargando el contenido del post.');
+        console.error(error);
     }
 }
 
@@ -113,7 +106,7 @@ function renderPost(post, user) {
     const categoryIconName = getCategoryIcon(post.category);
     const userImagePath = user.img_profile ? `/NeonNewsDefinitivo/img/${user.img_profile}` : '/NeonNewsDefinitivo/img/usuario.webp';
     
-
+    //IF por cada posible error que me corte el js
     if (postText) {
         postText.innerHTML = processedContent;
     }

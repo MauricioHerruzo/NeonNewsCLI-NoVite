@@ -47,7 +47,7 @@ if ($user && password_verify($password, $user['password'])) {
     
     //crear cookie si tal
     if ($remember) {
-        setcookie('remember_user', $user['id'], time() + (30 * 24 * 60 * 60), '/'); // 30 días
+        setcookie('remember_user', $user['id'], time() + (30 * 24 * 60 * 60), '/');
     }
     
     echo json_encode([

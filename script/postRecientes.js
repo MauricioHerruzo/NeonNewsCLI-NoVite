@@ -1,8 +1,5 @@
 'use strict';
 
-console.log('🚀 postRecientes.js cargado');
-
-
 function getImagePath(imageName) {
     if (!imageName) return '/NeonNewsDefinitivo/img/default-post.png';
     
@@ -55,7 +52,7 @@ function createNoticiaCard(post, user, index) {
     const bgClass = index % 2 === 1 ? 'bg-neutral-950' : '';
     
     return `
-        <a href="pages/post.php?id=${post.id}" class="w-full">
+        <a href="../pages/post.php?id=${post.id}" class="w-full">
             <div class="noticiaReciente flex flex-col w-full px-5 border-b-3 border-b-(--NeonBlanco) py-6 lg:px-[5vw] lg:flex-row lg:gap-10 items-start justify-start ${bgClass}">
                 <!-- Imagen Noticia -->
                 <div class="aspect-video overflow-hidden rounded-lg lg:w-[30vw]">
@@ -86,14 +83,11 @@ function createNoticiaCard(post, user, index) {
 
 async function loadPostRecientes() {
     try {
-        console.log('📰 Cargando posts recientes...');
-        
-      
+  
         const postsResponse = await axios.get('/NeonNewsDefinitivo/api.php');
         const posts = postsResponse.data;
         
         if (!posts || posts.length === 0) {
-            console.warn('⚠️ No hay posts disponibles');
             return;
         }
         
@@ -101,7 +95,6 @@ async function loadPostRecientes() {
         
         const noticiasContainer = document.getElementById('noticiasContainer');
         if (!noticiasContainer) {
-            console.error('❌ Container #noticiasContainer no encontrado');
             return;
         }
         
@@ -118,27 +111,21 @@ async function loadPostRecientes() {
                 const user = userResponse.data;
                 
                 if (!user) {
-                    console.warn(`⚠️ Usuario no encontrado para post ${post.id}`);
                     continue;
                 }
                 
-      
                 const noticiaHTML = createNoticiaCard(post, user, i);
                 noticiasContainer.innerHTML += noticiaHTML;
                 
-                console.log(`✅ Post ${post.id} añadido (${i + 1}/${posts.length})`);
-                
-            } catch (userError) {
-                console.error(`❌ Error cargando usuario para post ${post.id}:`, userError);
-                // 
+            } catch (error) {
+                console.error(error);
+                //no vamos a joder todo el perfil porque no cargue uno
                 continue;
             }
         }
         
-        console.log('🎉 Posts recientes cargados exitosamente');
         
     } catch (error) {
-        console.error('❌ Error cargando posts recientes:', error);
         
    
         const noticiasContainer = document.getElementById('noticiasContainer');
@@ -154,17 +141,9 @@ async function loadPostRecientes() {
 }
 
 
-async function reloadPostRecientes() {
-    await loadPostRecientes();
-}
 
 
 window.addEventListener('DOMContentLoaded', () => {
-    console.log('🏠 DOMContentLoaded - Inicializando posts recientes...');
     loadPostRecientes();
 });
 
-window.PostRecientes = {
-    load: loadPostRecientes,
-    reload: reloadPostRecientes
-};

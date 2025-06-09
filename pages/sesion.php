@@ -1,18 +1,18 @@
 <?php
-// sesion.php - Verificación global de sesión para todas las páginas
+//sesion.php 
 session_start();
 
-// Verificar cookie de "Recordarme" si no hay sesión activa
+
 if (!isset($_SESSION['id_user']) && isset($_COOKIE['remember_user'])) {
     $_SESSION['id_user'] = $_COOKIE['remember_user'];
 }
 
-// Función para verificar si el usuario está loggeado
+
 function isLoggedIn() {
     return isset($_SESSION['id_user']);
 }
 
-// Función para obtener datos del usuario loggeado
+
 function getCurrentUser() {
     if (!isLoggedIn()) {
         return null;
@@ -34,7 +34,7 @@ function getCurrentUser() {
     }
 }
 
-// Función para requerir login (redirige si no está loggeado)
+
 function requireLogin() {
     if (!isLoggedIn()) {
         header('Location: /NeonNewsDefinitivo/pages/login.php');
@@ -42,7 +42,7 @@ function requireLogin() {
     }
 }
 
-// Variables globales para usar en las páginas
+
 $isLoggedIn = isLoggedIn();
 $currentUser = getCurrentUser();
 ?>

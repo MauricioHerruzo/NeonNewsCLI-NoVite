@@ -48,9 +48,8 @@ async function loadAllPosts() {
     try {
         const response = await axios.get('/NeonNewsDefinitivo/api.php');
         allPosts = response.data;
-        
+        //Va a ser asi en todo, ifs de prevencion 
         if (!allPosts || allPosts.length === 0) {
-            console.warn('⚠️ No se encontraron posts para el banner');
             showDefaultBanner();
             return false;
         }
@@ -74,7 +73,7 @@ async function loadUsers() {
         });
         
     } catch (error) {
-        console.error('❌ Error cargando usuarios para banner:', error);
+        console.error(error);
         users = {};
     }
 }
@@ -91,6 +90,7 @@ function getUserImage(userId) {
     return '/NeonNewsDefinitivo/img/usuario.webp';
 }
 
+//Para no dejarlo feo si se jode
 function showDefaultBanner() {
     const bannerSection = document.getElementById('banner');
     const bannerLink = document.getElementById('bannerA');
@@ -123,12 +123,11 @@ function showDefaultBanner() {
                     </div>  
                 </div>
             `;
-            
+            //transicion
             setTimeout(() => {
-                bannerSection.style.opacity = '1';
-            }, 50);
-            
-        }, 300);
+                bannerSection.style.opacity = '1';}, 50)
+                ;}
+            , 300);
     }
 }
 
@@ -148,6 +147,7 @@ function updateBanner(post, skipTransition = false) {
     const userImage = getUserImage(post.id_user);
     
     if (skipTransition || isFirstLoad) {
+        //ESTAS RUTAS ME VAN A JODER LUEGO si la acabo subiendo
         bannerLink.href = `/NeonNewsDefinitivo/pages/post.php?id=${post.id}`;
         
         bannerSection.className = "bg-cover bg-center w-full h-150 md:h-200 content-end border-b-3 border-(--NeonGrey) lg:h-screen";
@@ -155,11 +155,13 @@ function updateBanner(post, skipTransition = false) {
         bannerSection.style.opacity = '1';
         bannerSection.style.transition = 'opacity 0.6s ease-in-out';
         
+
         bannerSection.innerHTML = `
             <div class="w-full fondoBanner lg:p-6 px-4 lg:px-20">
                 <h1 class="lg:text-6xl">${post.title}</h1>   
                 <div class="info flex items-center gap-1 pb-2 lg:h-[10vh]">
-                    <div class="videojuego flex items-center">                        <p class="lg:text-3xl hidden lg:block">${post.category}</p>
+                    <div class="videojuego flex items-center">                    
+                    <p class="lg:text-3xl hidden lg:block">${post.category}</p>
                         <img src="/NeonNewsDefinitivo/img/${categoryIcon}" alt="icono${post.category}" class="size-10 lg:size-20">
                     </div>
                     <div class="relative rounded-full border-1 border-(--NeonBlanco) w-8 h-8 overflow-hidden lg:size-15 bg-cover bg-center" 
@@ -172,8 +174,9 @@ function updateBanner(post, skipTransition = false) {
                 </div>  
             </div>
         `;
-        
+        //Apaño para cubrir la primera transicion
         isFirstLoad = false;
+        //corta
         return;
     }
     
@@ -217,7 +220,7 @@ function updateBanner(post, skipTransition = false) {
 
 function nextPost() {
     if (!allPosts || allPosts.length === 0) {
-        console.warn('⚠️ No hay posts disponibles para el banner');
+        //Frena
         return;
     }
     
@@ -233,24 +236,18 @@ function startBannerCarousel() {
     }
     
     if (!allPosts || allPosts.length === 0) {
-        console.warn('⚠️ No se puede iniciar carrusel: no hay posts');
         return;
     }
     
     updateBanner(allPosts[currentPostIndex]);
     
     if (allPosts.length > 1) {
+        //Temporizador
         bannerInterval = setInterval(nextPost, 10000);
     } else {
     }
 }
 
-function stopBannerCarousel() {
-    if (bannerInterval) {
-        clearInterval(bannerInterval);
-        bannerInterval = null;
-    }
-}
 
 async function initBanner() {
     try {
@@ -264,8 +261,7 @@ async function initBanner() {
         }
         
         
-    } catch (error) {
-        console.error('❌ Error inicializando banner:', error);
+    } catch {
         showDefaultBanner();
     }
 }
@@ -281,23 +277,5 @@ async function reloadBannerPosts() {
     }
 }
 
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        stopBannerCarousel();
-    } else {
-        if (allPosts && allPosts.length > 1) {
-            startBannerCarousel();
-        }
-    }
-});
-
-window.bannerDebug = {
-    reloadPosts: reloadBannerPosts,
-    nextPost: nextPost,
-    stopCarousel: stopBannerCarousel,
-    startCarousel: startBannerCarousel,
-    getCurrentPost: () => allPosts[currentPostIndex],
-    getAllPosts: () => allPosts
-};
 
 document.addEventListener('DOMContentLoaded', initBanner);

@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🔧 [DEFINITIVO] newUser.js loaded - Version 2024-DEFINITIVO - API: /NeonNewsDefinitivo/users.php');
   const registerForm = document.getElementById('registerForm');
   const registerError = document.getElementById('registerError');
   
@@ -9,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
       registerError.textContent = '';
       const formData = new FormData(registerForm);
         try {
+          //lo que me voy a arrepentir de las rutas absolutas
         const apiUrl = '/NeonNewsDefinitivo/users.php';
-        console.log('🌐 Making API call to:', apiUrl);
         const res = await axios.post(apiUrl, Object.fromEntries(formData));
         
         if (res.data.success) {

@@ -1,4 +1,7 @@
 <?php 
+
+//ESTA ES LA API DE USERS
+
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
@@ -119,7 +122,7 @@ switch ($method) {
         echo json_encode(['success' => true, 'id' => $userId, 'img_profile' => $img_profile, 'img_bg' => $img_bg]);
         break;
 
-    //PUT
+    //PUT, es la misma movida que la api de node, aunque al tener posibilidades de cagarla el usuario poner muchos ifs y tirando
     case 'PUT':
         $id = $_GET['id'] ?? null;
         if (!$id) {

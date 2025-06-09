@@ -55,14 +55,12 @@ async function loadAllPosts() {
         );
         
         if (!allPosts || allPosts.length === 0) {
-            console.warn('⚠️ No se encontraron posts de videojuegos para el banner');
             showDefaultBanner();
             return false;
         }
         
         return true;
-    } catch (error) {
-        console.error('❌ Error cargando posts de videojuegos para banner:', error);
+    } catch {
         showDefaultBanner();
         return false;
     }
@@ -79,8 +77,7 @@ async function loadUsers() {
         });
         
     } catch (error) {
-        console.error('❌ Error cargando usuarios para banner:', error);
-        users = {};
+        console.error( error);
     }
 }
 
@@ -142,7 +139,6 @@ function updateBanner(post, skipTransition = false) {
     const bannerLink = document.getElementById('bannerA');
     
     if (!bannerSection || !bannerLink || !post) {
-        console.error('❌ No se encontraron elementos del banner o post inválido');
         return;
     }
     
@@ -222,7 +218,6 @@ function updateBanner(post, skipTransition = false) {
 
 function nextPost() {
     if (!allPosts || allPosts.length === 0) {
-        console.warn('⚠️ No hay posts de videojuegos disponibles para el banner');
         return;
     }
     
@@ -238,7 +233,6 @@ function startBannerCarousel() {
     }
     
     if (!allPosts || allPosts.length === 0) {
-        console.warn('⚠️ No se puede iniciar carrusel: no hay posts de videojuegos');
         return;
     }
     
@@ -270,7 +264,6 @@ async function initBanner() {
         
         
     } catch (error) {
-        console.error('❌ Error inicializando banner de videojuegos:', error);
         showDefaultBanner();
     }
 }
@@ -285,24 +278,6 @@ async function reloadBannerPosts() {
         startBannerCarousel();
     }
 }
-
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        stopBannerCarousel();
-    } else {
-        if (allPosts && allPosts.length > 1) {
-            startBannerCarousel();
-        }
-    }
-});
-
-window.bannerVideojuegosDebug = {
-    reloadPosts: reloadBannerPosts,
-    nextPost: nextPost,
-    stopCarousel: stopBannerCarousel,
-    startCarousel: startBannerCarousel,
-    getCurrentPost: () => allPosts[currentPostIndex],
-    getAllPosts: () => allPosts
-};
+//NO se porque he triplicado, los fusiono si me sobra tiempo
 
 document.addEventListener('DOMContentLoaded', initBanner);

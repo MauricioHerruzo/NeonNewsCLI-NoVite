@@ -3,7 +3,7 @@
 let destacadosUsers = {};
 let currentDestacadoPost = null;
 
-// Función para obtener el ícono de categoría (reutilizada del banner.js)
+//Icono de categoría 
 function getDestacadoCategoryIcon(category) {
     const icons = {
         'PlayStation': 'Play.svg',
@@ -18,7 +18,7 @@ function getDestacadoCategoryIcon(category) {
     return icons[category] || 'Nintendo.svg';
 }
 
-// Función para obtener el color del borde según la categoría
+//COlor del borde
 function getCategoryBorderColor(category) {
     const colors = {
         'PlayStation': 'var(--PlayBlue)',
@@ -33,7 +33,6 @@ function getCategoryBorderColor(category) {
     return colors[category] || 'var(--NintendoRed)';
 }
 
-// Función para obtener imagen del post
 function getDestacadoImagePath(imageName) {
     if (!imageName) return '/NeonNewsDefinitivo/img/default-post.png';
     
@@ -44,17 +43,16 @@ function getDestacadoImagePath(imageName) {
     return `/NeonNewsDefinitivo/img/${imageName}`;
 }
 
-// Función para obtener imagen del usuario
+
 function getDestacadoUserImagePath(imageName) {
     if (!imageName || imageName === 'default_profile.jpg') {
         return '/NeonNewsDefinitivo/img/usuario.webp';
     }
     
-    // Mismo comportamiento que en banner.js
     return `/NeonNewsDefinitivo/img/${imageName}`;
 }
 
-// Función para formatear tiempo relativo
+
 function formatDestacadoTimeAgo(dateString) {
     const date = new Date(dateString);
     const now = new Date();
@@ -69,7 +67,7 @@ function formatDestacadoTimeAgo(dateString) {
     }
 }
 
-// Función para cargar usuarios
+//Porque no me da tiempo pero deberia hacer un archivo functions con Exports porque estoy repitiendolas por la cara
 async function loadDestacadosUsers() {
     try {
         console.log('Cargando usuarios desde API...');
@@ -80,21 +78,19 @@ async function loadDestacadosUsers() {
             response.data.forEach(user => {
                 destacadosUsers[user.id] = user;
             });
-            console.log('Usuarios cargados exitosamente:', Object.keys(destacadosUsers).length, 'usuarios');
         } else {
-            console.warn('La respuesta no contiene un array de usuarios:', response.data);
+            console.log(response.data);
         }
     } catch (error) {
-        console.error('Error cargando usuarios para destacados:', error);
-        // Intentar cargar desde ruta alternativa si falla
+
         try {
             const alternativeResponse = await axios.get('./users.php');
+            //SI no compruebo array se me lia no se de donde sale el error
             if (alternativeResponse.data && Array.isArray(alternativeResponse.data)) {
                 destacadosUsers = {};
                 alternativeResponse.data.forEach(user => {
                     destacadosUsers[user.id] = user;
                 });
-                console.log('Usuarios cargados desde ruta alternativa:', Object.keys(destacadosUsers).length, 'usuarios');
             }
         } catch (alternativeError) {
             console.error('Error también en ruta alternativa:', alternativeError);
@@ -102,7 +98,7 @@ async function loadDestacadosUsers() {
     }
 }
 
-// Función para obtener un post aleatorio de una categoría específica
+//Aleatorio Post
 async function getRandomPostByCategory(category = null) {
     try {
         let url = '/NeonNewsDefinitivo/api.php';
@@ -114,30 +110,29 @@ async function getRandomPostByCategory(category = null) {
         const posts = response.data;
         
         if (posts && posts.length > 0) {
-            // Seleccionar un post aleatorio
             const randomNumero = Math.floor(Math.random() * posts.length);
             return posts[randomNumero];
         }
-        
+        //Si null me voy al default
         return null;
     } catch (error) {
-        console.error('Error obteniendo post aleatorio:', error);
+        console.error(error);
         return null;
     }
 }
 
-// Función para actualizar el contenido del destacado
+
 function updateDestacadoContent(post) {
     if (!post) return;
     
     currentDestacadoPost = post;
     console.log('Actualizando destacado con post:', post);
     
-    // Buscar usuario correspondiente
+ 
     const user = destacadosUsers[post.id_user] || {};
     console.log('Usuario encontrado para id_user', post.id_user, ':', user);
     
-    // Actualizar elementos del DOM
+
     const destacadoImage = document.querySelector('#destacadoImage');
     const destacadoTitle = document.querySelector('#destacadoTitle');
     const destacadoCategory = document.querySelector('#destacadoCategory');
@@ -151,6 +146,7 @@ function updateDestacadoContent(post) {
         destacadoImage.alt = post.title || 'Imagen del post';
     }
     
+    //PECHa de iffs para cubrirme que se me corte el js
     if (destacadoTitle) {
         destacadoTitle.textContent = post.title || 'Sin título';
     }
@@ -180,39 +176,23 @@ function updateDestacadoContent(post) {
     if (destacadoTime) {
         destacadoTime.textContent = formatDestacadoTimeAgo(post.created_at || new Date());
     }
-      // Actualizar color del borde según la categoría
+
     if (destacadoCard) {
-        // Aplicar estilo inline para el color del borde según la categoría
         const borderColor = getCategoryBorderColor(post.category);
         destacadoCard.style.borderBottomColor = borderColor;
         destacadoCard.style.borderRightColor = borderColor;
     }
     
-    // Actualizar el enlace del post
+
     if (destacadoLink) {
         destacadoLink.href = `pages/post.php?id=${post.id}`;
     }
 }
 
-// Función para mostrar estado de carga
-function showLoadingState() {
-    const destacadoCard = document.querySelector('#destacadoCard');
-    if (destacadoCard) {
-        destacadoCard.style.opacity = '0.7';
-        destacadoCard.style.pointerEvents = 'none';
-    }
-}
 
-// Función para ocultar estado de carga
-function hideLoadingState() {
-    const destacadoCard = document.querySelector('#destacadoCard');
-    if (destacadoCard) {
-        destacadoCard.style.opacity = '1';
-        destacadoCard.style.pointerEvents = 'auto';
-    }
-}
 
-// Función para agregar animación de transición al cambiar contenido
+
+//Cambio
 function addTransitionAnimation() {
     const destacadoCard = document.querySelector('#destacadoCard');
     if (destacadoCard) {
@@ -220,7 +200,6 @@ function addTransitionAnimation() {
     }
 }
 
-// Función para agregar efectos visuales al hacer clic en categorías
 function addCategoryClickEffect(categoryElement) {
     // Remover efecto de otros elementos
     const allCategories = document.querySelectorAll('.categoriaVideojuego');
@@ -238,7 +217,7 @@ function addCategoryClickEffect(categoryElement) {
     }
 }
 
-// Función para configurar event listeners de categorías
+
 function setupCategoryListeners() {
     const categoryElements = document.querySelectorAll('[data-category]');
     
@@ -246,23 +225,12 @@ function setupCategoryListeners() {
         element.addEventListener('click', async (e) => {
             e.preventDefault();
             const category = element.getAttribute('data-category');
-            
-            // Efecto visual
             addCategoryClickEffect(element);
-            
-            // Mostrar estado de carga
-            showLoadingState();
-            
-            // Cargar nuevo post
             const randomPost = await getRandomPostByCategory(category);
             if (randomPost) {
                 updateDestacadoContent(randomPost);
             }
-            
-            // Ocultar estado de carga
-            hideLoadingState();
         });
-          // Agregar efecto hover
         element.addEventListener('mouseenter', () => {
             element.style.transform = 'scale(1.05)';
             element.style.transition = 'transform 0.2s ease-in-out';
@@ -274,7 +242,6 @@ function setupCategoryListeners() {
     });
 }
 
-// Función para cargar el post inicial (aleatorio de todas las categorías)
 async function loadInitialDestacado() {
     const randomPost = await getRandomPostByCategory();
     if (randomPost) {
@@ -282,42 +249,17 @@ async function loadInitialDestacado() {
     }
 }
 
-// Función principal de inicialización
+
 async function initDestacados() {
     try {
-        console.log('Iniciando sistema de destacados...');
-        
-        // Agregar animación de transición
-        addTransitionAnimation();
-        
-        // Cargar usuarios primero
-        console.log('Cargando usuarios...');
+        addTransitionAnimation();       
         await loadDestacadosUsers();
-        
-        // Debug: mostrar usuarios cargados
-        console.log('Usuarios disponibles:', destacadosUsers);
-        
-        // Cargar post inicial
-        console.log('Cargando post inicial...');
-        await loadInitialDestacado();
-        
-        // Configurar event listeners
+        await loadInitialDestacado();       
         setupCategoryListeners();
         
-        console.log('Sistema de destacados inicializado correctamente');
-        
-        // Debug adicional después de cargar el post inicial
-        setTimeout(() => {
-            console.log('Post actual:', currentDestacadoPost);
-            if (currentDestacadoPost) {
-                console.log('Usuario del post:', destacadosUsers[currentDestacadoPost.id_user]);
-            }
-        }, 1000);
-        
     } catch (error) {
-        console.error('Error inicializando sistema de destacados:', error);
+        console.error(error);
     }
 }
 
-// Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', initDestacados);

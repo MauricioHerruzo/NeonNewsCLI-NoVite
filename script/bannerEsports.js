@@ -56,15 +56,13 @@ async function loadAllPosts() {
         );
         
         if (!allPosts || allPosts.length === 0) {
-            console.warn('⚠️ No se encontraron posts de eSports para el banner');
             showDefaultBanner();
             return false;
         }
-        
-        console.log(`✅ ${allPosts.length} posts de eSports cargados para el banner`);
+
         return true;
     } catch (error) {
-        console.error('❌ Error cargando posts de eSports para banner:', error);
+        console.log(error);
         showDefaultBanner();
         return false;
     }
@@ -80,11 +78,9 @@ async function loadUsers() {
         usersArray.forEach(user => {
             users[user.id] = user;
         });
-        
-        console.log(`✅ ${usersArray.length} usuarios cargados para el banner`);
+
     } catch (error) {
-        console.error('❌ Error cargando usuarios para banner:', error);
-        users = {};
+        console.log(error)
     }
 }
 
@@ -146,7 +142,6 @@ function updateBanner(post, skipTransition = false) {
     const bannerLink = document.getElementById('bannerA');
     
     if (!bannerSection || !bannerLink || !post) {
-        console.error('❌ No se encontraron elementos del banner o post inválido');
         return;
     }
     
@@ -183,7 +178,6 @@ function updateBanner(post, skipTransition = false) {
         `;
         
         isFirstLoad = false;
-        console.log(`🎨 Banner de eSports actualizado (primera carga) con post: "${post.title}"`);
         return;
     }
     
@@ -228,7 +222,6 @@ function updateBanner(post, skipTransition = false) {
 
 function nextPost() {
     if (!allPosts || allPosts.length === 0) {
-        console.warn('⚠️ No hay posts de eSports disponibles para el banner');
         return;
     }
     
@@ -236,7 +229,6 @@ function nextPost() {
     const currentPost = allPosts[currentPostIndex];
     updateBanner(currentPost);
     
-    console.log(`📍 Banner de eSports mostrando post ${currentPostIndex + 1}/${allPosts.length}`);
 }
 
 function startBannerCarousel() {
@@ -245,7 +237,6 @@ function startBannerCarousel() {
     }
     
     if (!allPosts || allPosts.length === 0) {
-        console.warn('⚠️ No se puede iniciar carrusel: no hay posts de eSports');
         return;
     }
     
@@ -253,24 +244,14 @@ function startBannerCarousel() {
     
     if (allPosts.length > 1) {
         bannerInterval = setInterval(nextPost, 10000);
-        console.log('🔄 Carrusel de banner de eSports iniciado (10s por post)');
-    } else {
-        console.log('📌 Solo hay un post de eSports, banner estático');
-    }
+
+    } 
 }
 
-function stopBannerCarousel() {
-    if (bannerInterval) {
-        clearInterval(bannerInterval);
-        bannerInterval = null;
-        console.log('⏹️ Carrusel de banner de eSports detenido');
-    }
-}
 
 async function initBanner() {
     try {
-        console.log('🚀 Inicializando banner dinámico de eSports...');
-        
+  
         await loadUsers();
         
         const postsLoaded = await loadAllPosts();
@@ -278,17 +259,13 @@ async function initBanner() {
         if (postsLoaded) {
             startBannerCarousel();
         }
-        
-        console.log('✅ Banner dinámico de eSports inicializado');
-        
+       
     } catch (error) {
-        console.error('❌ Error inicializando banner de eSports:', error);
         showDefaultBanner();
     }
 }
 
 async function reloadBannerPosts() {
-    console.log('🔄 Recargando posts de eSports del banner...');
     stopBannerCarousel();
     const postsLoaded = await loadAllPosts();
     
@@ -299,25 +276,6 @@ async function reloadBannerPosts() {
     }
 }
 
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        console.log('👁️ Página oculta, pausando banner de eSports');
-        stopBannerCarousel();
-    } else {
-        console.log('👁️ Página visible, reanudando banner de eSports');
-        if (allPosts && allPosts.length > 1) {
-            startBannerCarousel();
-        }
-    }
-});
 
-window.bannerEsportsDebug = {
-    reloadPosts: reloadBannerPosts,
-    nextPost: nextPost,
-    stopCarousel: stopBannerCarousel,
-    startCarousel: startBannerCarousel,
-    getCurrentPost: () => allPosts[currentPostIndex],
-    getAllPosts: () => allPosts
-};
 
 document.addEventListener('DOMContentLoaded', initBanner);

@@ -109,7 +109,7 @@ if (!$postId) {
     
     <style>
         /* BOBARDEEN TAILWIND NO VALE PARA NADA  */
-        /* Estilos para Quill WYSIWYG Editor */
+        /* Estilos para Quill WYSIWYG Editor  como en newPost copia pega*/
         #editor-toolbar, .ql-toolbar {
             border: none !important;
             box-shadow: none !important;

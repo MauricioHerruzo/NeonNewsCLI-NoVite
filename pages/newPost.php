@@ -1,9 +1,8 @@
 <?php 
 include_once('header.php');
-// Requerir autenticación para poder postear
+//Requerir
 requireLogin();
 
-// Obtener información del usuario actual
 $currentUser = getCurrentUser();
 ?>
 <!DOCTYPE html>
@@ -73,7 +72,7 @@ $currentUser = getCurrentUser();
     <script src="../script/main.js"></script>
     <script src="../script/newPost.js"></script>    
     <style>
-        /* Estilos para Quill WYSIWYG Editor AUTOMATIZADOS */
+        /*Copia pega de Estilos para Quill WYSIWYG Editor AUTOMATIZADOS porque no hay manera de hacerlo*/
         #editor-toolbar, .ql-toolbar {
             border: none !important;
             box-shadow: none !important;

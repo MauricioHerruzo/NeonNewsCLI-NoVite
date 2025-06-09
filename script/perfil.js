@@ -19,7 +19,8 @@ function getCategoryIcon(category) {
         'PC': 'PC.svg',
         'Overwatch': 'Overwatch.svg',
         'LoL': 'LoL.svg',
-        'Valorant': 'Valorant.svg',        'eSports': 'PC.svg'
+        'Valorant': 'Valorant.svg',    
+        'eSports': 'PC.svg'
     };
     return icons[category] || 'PC.svg';
 }
@@ -29,7 +30,8 @@ async function loadCurrentUser() {
         const response = await axios.get('/NeonNewsDefinitivo/users.php?action=session');
         
         if (!response.data.logged) {
-            window.location.href = '/NeonNewsDefinitivo/pages/login.php';            return null;
+            window.location.href = '/NeonNewsDefinitivo/pages/login.php'; 
+            return null;
         }
         
         const userResponse = await axios.get(`/NeonNewsDefinitivo/users.php?id=${response.data.id_user}`);
@@ -38,7 +40,7 @@ async function loadCurrentUser() {
         return currentUser;
         
     } catch (error) {
-        console.error('❌ Error cargando usuario:', error);
+        console.error(error);
         return null;
     }
 }
@@ -48,8 +50,8 @@ function renderUserProfile(user) {
     const profileContainer = document.getElementById('profileContainer');
     const perfilbg = document.getElementById('perfilbg');
     
-    if (!profileContainer) {
-        console.error('❌ No se encontró el contenedor del perfil');        return;
+    if (!profileContainer) {      
+        return;
     }
     
     if (user.img_bg) {
@@ -64,35 +66,16 @@ function renderUserProfile(user) {
         <h3 class="border-r-3 border-b-3 border-l-0 border-b-(--NeonGrey) border-r-(--NeonGrey) p-2 rounded-full shadow-[40px_40px_70px_10px_rgba(0,0,0,0.9)] bg-neutral-900 lg:text-5xl lg:py-6 lg:px-15 flex justify-center text-center mt-10 mx-5 cursor-pointer hover:bg-neutral-800 transition-colors" id="perfilname">${user.name || 'Usuario'}</h3>        <p class="w-auto p-5 rounded-full shadow-[40px_40px_70px_10px_rgba(0,0,0,0.9)] bg-neutral-900 mb-10 lg:text-xl lg:py-6 lg:px-15 flex justify-center text-center mt-10 font-normal md:w-[800px] mx-5 cursor-pointer hover:bg-neutral-800 transition-colors" id="perfiltext">${user.bio || 'No hay biografía disponible.'}</p>
     `;
     
-    setupProfileEditEvents();
 }
 
-function setupProfileEditEvents() {
-    const profileImg = document.getElementById('perfilimg');
-    const profileName = document.getElementById('perfilname');    const profileText = document.getElementById('perfiltext');
-    
-    if (profileImg) {
-        profileImg.addEventListener('click', () => {
-        });
-    }
-    
-    if (profileName) {
-        profileName.addEventListener('click', () => {
-        });
-    }
-    
-    if (profileText) {
-        profileText.addEventListener('click', () => {
-        });
-    }
-}
+
 
 async function loadUserPosts() {    try {
         const response = await axios.get('/NeonNewsDefinitivo/api.php');
         const posts = response.data;
         
         if (!currentUser) {
-            console.error('❌ No hay usuario actual cargado');
+
             return;
         }
         
@@ -101,8 +84,8 @@ async function loadUserPosts() {    try {
         renderUserPosts(userPosts);
         
     } catch (error) {
-        console.error('❌ Error cargando posts:', error);
-        showError('Error cargando posts. Por favor, recarga la página.');
+        console.error(error);
+
     }
 }
 
@@ -110,7 +93,8 @@ function renderUserPosts(posts) {
     const postsContainer = document.getElementById('postsContainer');
     
     if (!postsContainer) {
-        console.error('❌ No se encontró el contenedor de posts');        return;
+        console.error('❌ No se encontró el contenedor de posts');        
+        return;
     }
     
     if (posts.length === 0) {
@@ -124,6 +108,7 @@ function renderUserPosts(posts) {
         return;
     }
       
+    //STYLE traducido de Tailwind con IA porque tailwind introducido de componente no carga con js plano
     if (!document.getElementById('profilePostStyles')) {
         const style = document.createElement('style');
         style.id = 'profilePostStyles';
@@ -479,7 +464,8 @@ function renderUserPosts(posts) {
                     <div class="post-card">
                         <!-- Imagen Noticia -->
                         <div class="post-image" style="background-image: url('${imagePath}');" 
-                             onerror="this.style.backgroundImage='url(/NeonNewsDefinitivo/img/default-post.png)'"></div>                        <div class="post-content">
+                             onerror="this.style.backgroundImage='url(/NeonNewsDefinitivo/img/default-post.png)'"></div>                        
+                             <div class="post-content">
                             <h5 class="post-title">${post.title}</h5>
                             <div class="post-info">
                                 <div class="info-item">
@@ -543,7 +529,7 @@ async function deletePost(postId) {
             await loadUserPosts();
         }
     } catch (error) {
-        console.error('❌ Error eliminando post:', error);
+        console.error(error);
         alert('Error al eliminar el post');
     }
 }
@@ -563,7 +549,7 @@ async function initProfile() {
     
     const user = await loadCurrentUser();
     if (!user) {
-        console.error('❌ No se pudo cargar el usuario');
+        window.location.href = '/NeonNewsDefinitivo/pages/login.php'; 
         return;
     }
     
